@@ -324,11 +324,14 @@
 
       
         
-          
-            <p>一、单线程</p>
-<p>​    javascript 引擎中负责解释和执行javascript的线程只有一个，可以称之为主线程，但是实际上还存在其他的线程。例如：处理AJAX请求的线程、处理DOM事件的线程、定时器线程、读写文件的线程(例如在Node.js中)等等。这些线程可能存在于JS引擎之内，也可能存在于JS引擎之外，在此我们不做区分。不妨叫它们<strong>工作线程</strong>。</p>
-
-          
+          <p>线程
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/10/06/异步与同步/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -467,15 +470,14 @@
 
       
         
-          
-            <p>TCP/IP</p>
-<p><a href="http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2012/05/internet_protocol_suite_part_i.html</a></p>
-<p>http协议：</p>
-<p><a href="http://www.ruanyifeng.com/blog/2016/08/http.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2016/08/http.html</a></p>
-<p>三次握手四次分手：</p>
-<p><a href="https://github.com/jawil/blog/issues/14" target="_blank" rel="noopener">https://github.com/jawil/blog/issues/14</a></p>
-
-          
+          <p>计算机网络
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/10/01/计算机网络/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -592,30 +594,14 @@
 
       
         
-          
-            <p>1、MIME 全称：”Multipurpose Internet Mail Extensions“  中文：”多用途互联网邮件扩展“，展示的是一系列的电子邮件规范，成为电子邮件实际上地标准。</p>
-<p>2、传统的电子邮件的特点：就是规定电子邮件只能使用ASCII字符。</p>
-<p>这导致了三个结果：</p>
-<p>1）非英语字符都不能在电子邮件中使用；<br>2）电子邮件中不能插入二进制文件（如图片）；</p>
-<p>3）电子邮件不能有附件。</p>
-<p>3、MIME对传统邮件的扩展，表现在它在邮件上加了几条语句，其中重要的3条：</p>
-<p>第一条是：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MIME-Version: 1.0</span><br></pre></td></tr></table></figure>
-<p>说明了MIME版本号</p>
-<p>第二条是：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Content-Type: text/plain; charset=&apos;ISO-8859-1&apos;</span><br></pre></td></tr></table></figure>
-<p>表明了传递信息的类型和编码类型</p>
-<p>类型：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">text/plain：纯文本，文件扩展名.txt</span><br><span class="line">text/html：HTML文本，文件扩展名.htm和.html</span><br><span class="line">image/jpeg：jpeg格式的图片，文件扩展名.jpg</span><br><span class="line">image/gif：GIF格式的图片，文件扩展名.gif</span><br><span class="line">audio/x-wave：WAVE格式的音频，文件扩展名.wav</span><br><span class="line">audio/mpeg：MP3格式的音频，文件扩展名.mp3</span><br><span class="line">video/mpeg：MPEG格式的视频，文件扩展名.mpg</span><br><span class="line">application/zip：PK-ZIP格式的压缩文件，文件扩展名.zip</span><br></pre></td></tr></table></figure>
-<p>整个Content-Type这一行，不仅使用在电子邮件，后来也被移植到了HTTP协议中，所以现在只要是在网上传播的HTTP信息，都带有Content-Type头，以表明信息类型。</p>
-<p>传统邮件不支持ASCII码和二进制数据，所以规定了第三条数据：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Content-transfer-encoding: base64</span><br></pre></td></tr></table></figure>
-<p>base64编码是用于传输二进制数据的方案，Base64将数据作为24位组处理，将该数据映射到四个编码字符。它有时被称为3到4编码。24位组的每6位用作映射表（base64字母表）的索引，以获得编码数据的字符。编码数据的行长限制为76个字符。base64编码中使用的字符，base64字母表，不包括对SMTP或与MIME边界字符串一起使用的连字符的重要特殊字符。</p>
-<p>许多邮件传输代理只能处理短字符的US-ASCII字符。这被称为“7bit”或有时称为“7bit编码”文本。SMTP强加了这个限制。为了在互联网上发送更丰富的文件类型，以便所有的MTA都可以正确处理它们，必须使用某种编码。编码的目的是仅使用7位字符和有限的行长来表示文件的内容。该文件可以是图像文件，可执行文件或任何通用二进制文件。</p>
-<p>虽然定义了五个内容传输编码值，以及可扩展X令牌，base64和quotable-printable是MIME定义的唯一实际的编码方案</p>
-<p><a href="https://msdn.microsoft.com/en-us/library/ms526941(v=exchg.10" target="_blank" rel="noopener">Content-transfer-encoding</a>.aspx)</p>
-
-          
+          <p>MIME学习
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/10/01/MIME记录/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -941,137 +927,14 @@
 
       
         
-          
-            <p>对象对象！！！！</p>
-<p>简单基本类型</p>
-<p>javascript中的六种主要<strong>简单基本类型</strong>：</p>
-<ul>
-<li><p>string</p>
-</li>
-<li><p>number</p>
-</li>
-<li><p>boolean</p>
-</li>
-<li><p>null</p>
-</li>
-<li><p>undefined</p>
-</li>
-<li><p>object</p>
-<p>​</p>
-</li>
-</ul>
-<blockquote>
-<p>string number boolean null undefined 不是对象，null 有时会被当做一种对象 typeof null   返回 “object”</p>
-</blockquote>
-<p>函数和对象，是特殊的对象，函数是可调用的对象 数组也是对象的一种，数组中内容中内容的组织方式比一般对象复杂</p>
-<p>内置对象</p>
-<ul>
-<li><p>String</p>
-</li>
-<li><p>Number</p>
-</li>
-<li><p>Boolean</p>
-</li>
-<li><p>Object</p>
-</li>
-<li><p>Function </p>
-</li>
-<li><p>Array</p>
-</li>
-<li><p>Date</p>
-</li>
-<li><p>RegExp</p>
-</li>
-<li><p>Error</p>
-<p>​</p>
-</li>
-</ul>
-<blockquote>
-<p>他们是Javascript中的一些内置函数，可以当做构造函数调用（new  xx）产生一个对应子类型的新对象</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var strObject = new String(&quot;aaa&quot;);</span><br><span class="line">typeof strObject;// &quot;object&quot;</span><br><span class="line">strObject instanceof String //true</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var strPrimitive = &quot;aaaaaaa&quot;;</span><br><span class="line">typeof strPrimitive// &quot;string&quot;</span><br><span class="line">strPrimitive instanceof String //false</span><br></pre></td></tr></table></figure>
-<p>原始值aaaaaaa是字面量，是一个不可变的值，如果要在这个字面量上执行一些操作，需要转换为String对象</p>
-<p>在必要时，语言会自动把字符串字面量转换成一个String 对象，</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var strPrimitive = &quot;aaaa&quot;;</span><br><span class="line">conosle.log(strPrimitive.length);</span><br><span class="line">console.log(strPrimitive.charAt(3));</span><br></pre></td></tr></table></figure>
-<p>可以直接在字面量上访问属性和方法因为 <strong>引擎自动把字面量转换成String 对象</strong></p>
-<p>数值字面量类似</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">42.12.toFixed(2)//引擎会把它转换成new NUmber(42)</span><br></pre></td></tr></table></figure>
-<p>Boolean 字面量也是如此</p>
-<blockquote>
-<p>null 和undefined 没有构造形式，只有文字形式，Date只有构造，没有文字形式</p>
-</blockquote>
-<p><strong>Object Array Function RegExp 文字形式和构造形式都是对象，不是字面量</strong></p>
-<p>简单比较：</p>
-<p>文字形式：简单</p>
-<p>构造形式：可以提供一些额外的选项</p>
-<p>Error对象，通常在出现异常时自动创建  可以使用 new Error()</p>
-<p>内容</p>
-<p>注意：对象的内容不是存在对象内部，</p>
-<p>在引擎内，对象的内容的值的存储方式是多种多样的，一般不会存在对象容器内部，存在对象内部的是属性名称，他们像指针一样指向指的真正存储位置。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var myObj = &#123;</span><br><span class="line">	a: 2</span><br><span class="line">&#125;;</span><br><span class="line">myObj.a //2 属性访问</span><br><span class="line">myObj[&quot;a&quot;] //2 键访问</span><br></pre></td></tr></table></figure>
-<p>相同： 访问的是同一个位置</p>
-<p>不同：</p>
-<ul>
-<li>属性访问要求属性满足标识符命名规范</li>
-<li>键访问的方式可以接受任意的UTF-8/Unicode字符串 作为属性名</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[&quot;super agent&quot;]</span><br><span class="line">[&quot;super-agent&quot;]</span><br></pre></td></tr></table></figure>
-<p>对象中地属性名是永远是字符串，所以如果使用string 字面量以外的形式访问的话，首先转变成相应的字符串的形式。如下：</p>
-<p><code>[&quot;&quot;]</code>语法是使用字符串来访问属性，所以<code>[2]</code> <code>[true]</code> <code>[obj]</code> 相应的变成<code>[&quot;2&quot;]</code> <code>[&quot;true&quot;]</code> <code>[&quot;[object Object]&quot;]</code> </p>
-<p>可计算属性名</p>
-<p>要通过表达式计算属性名    {a+”aa” : “a”}</p>
-<p>属性与方法</p>
-<p>(函数通常会认为是对象，在其他语言中，对象中地函数通常会称为方法)，所以称为方法</p>
-<p>从技术角度来讲，<strong>函数永远不会属于一个对象</strong></p>
-<p>why?</p>
-<blockquote>
-<p>函数与对象的关系最多只能说是间接关系</p>
-<p>属性访问返回的是一个函数，它也并不是一个方法。和其他的函数没有任何区别，（除了this的隐式绑定）不属于某个对象。</p>
-</blockquote>
-<p>一个我长久以来的疑问：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">function foo () &#123;</span><br><span class="line">  console.log(&quot;xxx&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var someFoo = foo;</span><br><span class="line"></span><br><span class="line">var myObj = &#123;</span><br><span class="line">	someFoo: foo</span><br><span class="line">&#125;;</span><br><span class="line">foo;// f foo () &#123;&#125;</span><br><span class="line">someFoo;//f foo () &#123;&#125;</span><br><span class="line">myObj.someFoo; //f foo () &#123;&#125;</span><br></pre></td></tr></table></figure>
-<p>someFoo 和 myObj.someFoo 只是对同一个函数的不同引用，并不能说明这个函数是特别的或者”属于“某个对象的。如果在foo内部定义一个this ，则区别在于 myObj.someFoo  的this会隐式绑定到一个对象</p>
-<p>即使在对象的文字形式中声明一个函数表达式，这个函数也不属于这个对象。</p>
-<p><strong>他们只是对于相同函数对象的多个引用</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var myObj = &#123;</span><br><span class="line">  foo: function &#123;&#125; </span><br><span class="line">&#125;;</span><br><span class="line">var someFoo = myObj.foo;</span><br><span class="line">someFoo;//function () &#123;&#125;</span><br><span class="line">myObj.foo// function () &#123;&#125;</span><br></pre></td></tr></table></figure>
-<p>数组！！！</p>
-<p>数组有一套结构化的值存储机制，不限制值的类型</p>
-<p>如果为数组添加一个属性，属性名看起来像数字，那么会发生修改而不是添加属性。</p>
-<p>​                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    复制对象！！！</p>
-<p>深复制和浅复制</p>
-<p>浅复制：一般类型完全复制，对象类型，复制的是引用</p>
-<p>ES6定义的新语法用来实现浅复制；</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">function fn () &#123;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var array = [];</span><br><span class="line">var obj = &#123;</span><br><span class="line">	a: 2,</span><br><span class="line">	b:array,</span><br><span class="line">	c: fn</span><br><span class="line">&#125;</span><br><span class="line">//Object.assign(目标对象，源对象1，源对象2，源对象3.....)</span><br><span class="line">var newObj = Object.assign(&#123;&#125;,obj);</span><br><span class="line">newObj.a === obj.a // true</span><br></pre></td></tr></table></figure>
-<p>该方法会遍历源对象的可枚举属性，并将他们复制到目标对象，最后返回目标对象。该方法是用=复制的，所以源对象的一些特性不会复制到目标对象。</p>
-<p>属性描述符！！！</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var obj = &#123;&#125;</span><br><span class="line">Object.defineProperty(obj,&quot;a&quot;,function () &#123;</span><br><span class="line">	value: 32,</span><br><span class="line">	write: true,</span><br><span class="line">	configurable: true,</span><br><span class="line">	enumberable: true</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>不可写的属性，不可更改，报TypeError错误</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var obj = &#123;&#125;</span><br><span class="line">Object.defineProperty(obj,&quot;a&quot;,&#123;</span><br><span class="line">	value: 23,</span><br><span class="line">	writrable:false </span><br><span class="line">	configurable,</span><br><span class="line">	enumberable: true</span><br><span class="line">&#125;);</span><br><span class="line">obj.a = 123 //TypeError</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>TypeError表示我们无法修改一个不可写的属性</p>
-</blockquote>
-<p>configurable 不可配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">var obj = &#123;&#125;</span><br><span class="line">Object.defineProperty(obj,&quot;a&quot;, &#123;</span><br><span class="line">	value: 4,</span><br><span class="line">	writable: true,</span><br><span class="line">	configurable:false,</span><br><span class="line">    enumberable: true</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">obj.a = 5//可以修改</span><br><span class="line"></span><br><span class="line">Object.defineProperty(obj,&quot;a&quot;, &#123;</span><br><span class="line">	value: 67,</span><br><span class="line">	writable: true,</span><br><span class="line">	configurable: true,</span><br><span class="line">	enumberable: true</span><br><span class="line">&#125;);//TypeError  </span><br><span class="line">//不可以修改一个不可配置的属性描述符，将configurable修改成false 是单向操作，不可撤销</span><br></pre></td></tr></table></figure>
-<p>有一个例外 <a href="">你不知道的javascript P113</a></p>
-<p>除了无法修改 configurable还会禁止delete一个configurable的属性</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var obj = &#123;&#125;;</span><br><span class="line">Object.defineProperty(obj,&quot;a&quot;,&#123;</span><br><span class="line">	.....</span><br><span class="line">	configurable: false</span><br><span class="line">&#125;);</span><br><span class="line">delete obj.a //</span><br><span class="line">obj.a //....还会有这个属性的值</span><br></pre></td></tr></table></figure>
-<p>存在性！！！！</p>
-<p>判断一个对象中是真的没有一个属性，还是有这个属性，但是该属性的值是undefine</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var obj = &#123;</span><br><span class="line">  a:&apos;2&apos;</span><br><span class="line">&#125;;</span><br><span class="line">(&quot;a&quot; in obj);//true</span><br><span class="line">(&quot;b&quot; in obj);//false</span><br><span class="line"></span><br><span class="line">obj.hasOwnProperty(&quot;a&quot;); //true</span><br><span class="line">obj.hasOwnProperty(&quot;b&quot;);//false</span><br></pre></td></tr></table></figure>
-<p><code>in</code> 操作符检查对象，以及该对象的原型链，<code>hasOwnProperty</code> 只会检查属性是否在<code>obj</code> 这个对象中，不会检查原型链。</p>
-<blockquote>
-<p>看起来<code>in</code> 操作符检查的是容器内是否有某个值，但是实际上检查的是某个<strong>属性名</strong> 是否存在，这对于对象来说非常重要</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">3 in [0,1,3] //false 这个数组李里面的属性名是 0,1,2 没有 3 ！！！！！</span><br></pre></td></tr></table></figure>
-<p>可枚举性！！！</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">var obj = &#123;b: &quot;2&quot;&#125;;</span><br><span class="line">Object.defineProperty(obj,&quot;a&quot;,&#123;</span><br><span class="line">  value: 2,</span><br><span class="line">  enumberable: false</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">(&quot;a&quot; in obj) //true</span><br><span class="line">obj.hasOwnProperty(&quot;a&quot;);//true</span><br><span class="line">for(var i  in obj)&#123;</span><br><span class="line">	console.log(i,obj[i]);</span><br><span class="line">&#125;</span><br><span class="line">obj.propertyIsEnumerable(&quot;a&quot;); //false</span><br><span class="line">Object.keys(obj); //只返回可枚举的</span><br><span class="line">Object.getOwnPropertyNames(obj) ;//所有的属性</span><br></pre></td></tr></table></figure>
-<p><code>Object.keys(obj)</code>     返回一个数组，只包含可枚举的属性， <code>Object.getOwnPropertyNames(obj)</code> 返回一个数组，包含所有的可枚举和不可以枚举的属性，两者都是只查找对象直接包含的属性，不会查找原型链。</p>
-<p>遍历！！！</p>
-<p>for in 循环遍历对象的可枚举属性（包括原型链）for循环遍历和for in循环遍历都是遍历的属性，ES6提供 for of 方法，遍历数组的值。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var array = [1,2,3];</span><br><span class="line">for(var i of array) &#123;</span><br><span class="line">  console.log(i); //1,2,3</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-          
+          <p>对象对象！！！！
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/09/29/object/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1543,27 +1406,14 @@
 
       
         
-          
-            <p>命令行参数</p>
-<p>当为模块安装一个依赖时，通过</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install express --save</span><br></pre></td></tr></table></figure>
-<p><code>--save</code> 和<code>--save-dev</code> 可以自动添加修改package.json文件中的配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install express --save</span><br></pre></td></tr></table></figure>
-<p>自动把模块和版本号添加到dependencies部分</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install express --save-dev</span><br></pre></td></tr></table></figure>
-<p>自动把模块和版本号添加到devDependencies部分</p>
-<p>配置文件</p>
-<p>package.json 提供了参数依赖关系定义:</p>
-<ul>
-<li>dependencies</li>
-<li>peerDependencies</li>
-<li>devDependencies</li>
-</ul>
-<p>devDependencies是开发时依赖，</p>
-<p>比如你模块用了mocha测试框架，那么你的模块的开发就依赖mocha，如果别人想为你的模块贡献代码，他就需要安装mocha。但是只是使用你的模块的人，就不需要mocha。</p>
-<p>peerDependencies是为插件准备的。比如grunt的插件，里面没有require(“grunt”)，所以用dependencies会有问题。所以需要单独列出。</p>
-
-          
+          <p>命令行参数
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/09/07/save/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
