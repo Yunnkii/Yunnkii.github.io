@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="http," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="从问题：200（from cache）和304  有什么区别来看浏览器缓存。">
+<meta name="keywords" content="http">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTP缓存">
+<meta property="og:url" content="http://yoursite.com/2018/03/08/HTTP缓存/index.html">
+<meta property="og:site_name" content="Gaomy&#39;s blog">
+<meta property="og:description" content="从问题：200（from cache）和304  有什么区别来看浏览器缓存。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://segmentfault.com/img/bVJjwd?w=692&h=1031/view">
+<meta property="og:image" content="http://7tszky.com1.z0.glb.clouddn.com/FjhEnd-EaDnO2HbgJUlPHMzUcqr4">
+<meta property="og:image" content="https://segmentfault.com/img/bVJjv8?w=570&h=292/view">
+<meta property="og:updated_time" content="2018-03-08T13:33:30.950Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HTTP缓存">
+<meta name="twitter:description" content="从问题：200（from cache）和304  有什么区别来看浏览器缓存。">
+<meta name="twitter:image" content="https://segmentfault.com/img/bVJjwd?w=692&h=1031/view">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/03/08/HTTP缓存/"/>
+
+
+
+
+
+  <title>HTTP缓存 | Gaomy's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Gaomy's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">前端</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/08/HTTP缓存/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Gaomy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/assets/img/pic.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gaomy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">HTTP缓存</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-08T17:17:08+08:00">
+                2018-03-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/HTTP/" itemprop="url" rel="index">
+                    <span itemprop="name">HTTP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>从问题：200（from cache）和304  有什么区别来看浏览器缓存。</p>
+<a id="more"></a>
+<h4 id="为什么会用浏览器缓存："><a href="#为什么会用浏览器缓存：" class="headerlink" title="为什么会用浏览器缓存："></a>为什么会用浏览器缓存：</h4><p>通过网络获取资源既速度缓慢又代价高昂：下载过程可能需要在客户端和服务器之间进行多次往返，这会导致延迟处理，并可能会阻止网页内容呈现，还会致使访问者支付数据费用。所有的服务器响应都应指定一种缓存政策，以帮助客户端确定是否以及何时能够重用之前获取的响应。</p>
+<h4 id="客户端发出一个请求之后经历了什么？"><a href="#客户端发出一个请求之后经历了什么？" class="headerlink" title="客户端发出一个请求之后经历了什么？"></a>客户端发出一个请求之后经历了什么？</h4><p>浏览器发出的http请求绘首先被路由到浏览器的缓存，查看缓存中是否有可以用于实现的有效响应，如果有匹配的响应，可以直接从缓存中读取响应，这样就避免了网络延迟及传输产生的数据成本。</p>
+<p><img src="https://segmentfault.com/img/bVJjwd?w=692&amp;h=1031/view" alt="img"></p>
+<p>详细解释这个过程需要引入http的各个请求头</p>
+<p>1、【Cache-Control:no-cache】和【Pragma:no-cache】—禁止缓存</p>
+<p>首先判断是否禁止缓存，要是禁止缓存，需要直接向服务器发出请求。</p>
+<blockquote>
+<p>禁止缓存：缓存中不得存储任何关于客户端请求和服务端响应的东西，每次由客户端发起的请求都会下载完整的内容。</p>
+</blockquote>
+<p>2、有缓存的情况下，是否检查缓存是否过期</p>
+<p>检查，需要查看max-age,如果没有该属性，查看Expires属性，没有的话查找Last-Modified信息。</p>
+<p>《不检查的话直接是下面的步骤》</p>
+<ul>
+<li>过期：到服务器进行有效性的验证。即ETag</li>
+</ul>
+<p>作用：</p>
+<p>在响应过期之后，发起新的请求，但此时如果服务器资源未被更改，返回304 Not Modified响应，告诉浏览器缓存中的响应未被修改过，不必再次下载响应 。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">在请求头中查找 if-None-Match字段，值为服务器上次返回的ETag的响应头的值</span><br><span class="line"></span><br><span class="line">没有if-None-Match字段，查找if-Modified-Since字段，其值为服务器上次返回的Last-Modified响应头中的日期值。</span><br><span class="line"></span><br><span class="line">有的话，到服务端进行验证，没有变化304，从缓存读取，有变化200。</span><br></pre></td></tr></table></figure>
+<ul>
+<li>本地副本没有过期，直接从缓存中读取</li>
+</ul>
+<h4 id="缓存实践"><a href="#缓存实践" class="headerlink" title="缓存实践"></a>缓存实践</h4><p>1、缓存时间方面：</p>
+<p>​     【Expires / Cache-Control】</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Expires使用的失效时间   http1.0</span><br><span class="line">Cache-Control使用时间间隔   http1.1</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control http1.1中加入的新属性，它有以下常用参数：</span><br><span class="line"></span><br><span class="line">- Public/Private 私有缓存/共有缓存</span><br><span class="line">- no-cache：不建议使用本地缓存，但仍然会缓存到本地</span><br><span class="line">- no-store：不会在客户端缓存任何数据</span><br><span class="line">- max-age：比较特殊，是一个混合属性，替代了Expires的过期时间</span><br></pre></td></tr></table></figure>
+<p>2、有效性验证</p>
+<p>​    【Last-Modified/ETag】</p>
+<p>都是通过某个标识符请求资源，如果资源没有变化，返回304(Not Modified)内容为空,节省了传输数据量。当资源发生变化后，返回和第一次请求时类似。保证不向客户端重复发出资源，也保证当服务器有变化时，客户端能够得到最新的资源。</p>
+<blockquote>
+<p>Last-Modified使用文件最后修改作为文件标识值，它无法处理文件一秒内多次修改的情况，而且只要文件修改了哪怕文件实质内容没有修改，也会重新返回资源内容；ETag作为“被请求变量的实体值”，其完全可以解决Last-Modified头部的问题，但是其计算过程需要耗费服务器资源。</p>
+</blockquote>
+<p><strong>既生Last-Modified何生Etag？</strong></p>
+<p>你可能会觉得使用Last-Modified已经足以让浏览器知道本地的缓存副本是否足够新，为什么还需要Etag（实体标识）呢？HTTP1.1中Etag的出现主要是为了解决几个Last-Modified比较难解决的问题：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">1.Last-Modified标注的最后修改只能精确到秒级，如果某些文件在1秒钟以内，被修改多次的话，它将不能准确标注文件的修改时间</span><br><span class="line"></span><br><span class="line">2.如果某些文件会被定期生成，当有时内容并没有任何变化，但Last-Modified却改变了，导致文件没法使用缓存</span><br><span class="line"></span><br><span class="line">3.有可能存在服务器没有准确获取文件修改时间，或者与代理服务器时间不一致等情形</span><br></pre></td></tr></table></figure>
+<p>Etag是服务器自动生成或者由开发者生成的对应资源在服务器端的唯一标识符，能够更加准确的控制缓存。Last-Modified与ETag是可以一起使用的，服务器会优先验证ETag，一致的情况下，才会继续比对Last-Modified，最后才决定是否返回304。</p>
+<h4 id="需要达成的目标"><a href="#需要达成的目标" class="headerlink" title="需要达成的目标"></a>需要达成的目标</h4><ul>
+<li>在过期时间之前缓存可以用</li>
+<li>在文件有变化的时候客户端立即更新</li>
+<li>客户端时间不正确也可以正常工作</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">比较好的一个方案是使用Cache-Control，并且结合文件版本号。即在文件名中嵌入的一个“指纹”</span><br></pre></td></tr></table></figure>
+<p><img src="http://7tszky.com1.z0.glb.clouddn.com/FjhEnd-EaDnO2HbgJUlPHMzUcqr4" alt="img"></p>
+<p>将js与css等静态资源设置Cache-Control一年有效期，然后在文件名中加入了一串版本号信息。</p>
+<p>那么在文件没有变动的时候，浏览器不用发起请求直接可以使用缓存文件；</p>
+<p>而在文件有变化的时候，由于文件版本号的变更，导致文件名变化，请求的url变了，自然文件就更新了。</p>
+<p>一些点：</p>
+<ul>
+<li>Last-Modified 与 Etag的方式还是会请求服务器的，只不过返回的是304，对于304的请求F5是不会重新下载的。</li>
+<li>Expires 与 Cache-Control max-age是直接从本地读取的，不需要请求服务器，他们的“返回状态”是<strong>200 OK(BFCache)</strong>，这个时候F5是会重新下载的。</li>
+</ul>
+<p>补充：</p>
+<h4 id="与缓存相关的重要的头字段"><a href="#与缓存相关的重要的头字段" class="headerlink" title="与缓存相关的重要的头字段"></a>与缓存相关的重要的头字段</h4><p>1、Cache-Control（重要策略）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Cache-Control包括：max-age / s-maxage/public/private/no-cache/no-store/must-revalidate等</span><br></pre></td></tr></table></figure>
+<ul>
+<li>max-age（单位为s）指定设置缓存最大的有效时间，定义的是时间长短。当浏览器向服务器发送请求后，在max-age这段时间里浏览器就不会再向服务器发送请求了。</li>
+</ul>
+<p>max-age=2592000，也就是说缓存有效期为2592000秒（也就是30天）。于是在30天内都会使用这个版本的资源，即使服务器上的资源发生了变化，浏览器也不会得到通知。</p>
+<blockquote>
+<p> max-age会覆盖掉Expires</p>
+</blockquote>
+<ul>
+<li><p>s-maxage（单位为s）同max-age，只用于共享缓存（比如CDN缓存）</p>
+<p>当s-maxage=60时，在这60秒中，即使更新了CDN的内容，浏览器也不会进行请求</p>
+</li>
+<li><p>public 指定响应会被缓存，并且在多用户间共享</p>
+</li>
+<li><p>private 响应只作为私有的缓存（见下图），不能在用户间共享</p>
+</li>
+<li><p>no-cache 指定不缓存响应，表明资源不进行缓存</p>
+</li>
+<li><p>no-store 绝对禁止缓存，一看就知道如果用了这个命令当然就是不会进行缓存啦～每次请求资源都要从服务器重新获取。<br>must-revalidate指定如果页面是过期的，则去服务器进行获取。</p>
+</li>
+</ul>
+<p>2、Expires</p>
+<p>缓存过期时间，用来指定资源到期的时间，是服务器端的具体的时间点</p>
+<p>3、Last-modified</p>
+<p>服务器端文件的最后修改时间</p>
+<p>4、ETag</p>
+<p>根据实体内容生成一段hash字符串，标识资源的状态，由服务端产生。浏览器会将这串字符串传回服务器，验证资源是否已经修改，如果没有修改，过程如下：</p>
+<p><img src="https://segmentfault.com/img/bVJjv8?w=570&amp;h=292/view" alt="img"></p>
+<p>回答开头的问题：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">刷新后实际没有发送任何请求，因为 Cache-Control 定义的缓存时间段还没到期。在Chrome中即使没发送请求，但只要从本地的缓存中取，都会在Network面板显示一条状态为200且注明“from cache”的伪请求，其Response内容只是上一次回包留下的数据。</span><br><span class="line"></span><br><span class="line">前面提到过，在Chrome中如果点击“刷新”按钮，Chrome会强制给所有资源加上“Cache-Control: max-age=0”的请求首部并向服务器发送验证请求的，而在文章开头的动图中，我们的确点击了“刷新”按钮，却不见浏览器发去新请求（并返回304)</span><br></pre></td></tr></table></figure>
+<p><a href="http://imweb.io/topic/5795dcb6fb312541492eda8c" target="_blank" rel="noopener">HTTP缓存控制小结</a></p>
+<p><a href="https://developers.google.com/web/fundamentals/performance/optimizing-content-efficiency/http-caching?hl=zh-cn" target="_blank" rel="noopener">HTTP缓存</a></p>
+<p><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Caching_FAQ" target="_blank" rel="noopener">HTTP 缓存</a></p>
+<p><a href="http://imweb.io/topic/55c6f9bac222e3af6ce235b9" target="_blank" rel="noopener">缓存策略</a> （CDN缓存。HTML5缓存）</p>
+<p><a href="https://developers.google.com/speed/docs/insights/OptimizeImages" target="_blank" rel="noopener">各种优化</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/http/" rel="tag"># http</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/06/前端性能优化总结/" rel="next" title="前端性能优化总结">
+                <i class="fa fa-chevron-left"></i> 前端性能优化总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/assets/img/pic.jpg"
+                alt="Gaomy" />
+            
+              <p class="site-author-name" itemprop="name">Gaomy</p>
+              <p class="site-description motion-element" itemprop="description">gao's blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么会用浏览器缓存："><span class="nav-number">1.</span> <span class="nav-text">为什么会用浏览器缓存：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#客户端发出一个请求之后经历了什么？"><span class="nav-number">2.</span> <span class="nav-text">客户端发出一个请求之后经历了什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缓存实践"><span class="nav-number">3.</span> <span class="nav-text">缓存实践</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#需要达成的目标"><span class="nav-number">4.</span> <span class="nav-text">需要达成的目标</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#与缓存相关的重要的头字段"><span class="nav-number">5.</span> <span class="nav-text">与缓存相关的重要的头字段</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Gaomy</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
