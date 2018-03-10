@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="MIME," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -79,18 +79,16 @@
 
 
 
-<meta name="description" content="MIME学习">
-<meta name="keywords" content="MIME">
-<meta property="og:type" content="article">
-<meta property="og:title" content="MIME记录">
-<meta property="og:url" content="http://yoursite.com/2017/10/01/MIME记录/index.html">
+<meta name="description" content="gao&apos;s blog">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Gaomy&#39;s blog">
+<meta property="og:url" content="http://yoursite.com/categories/前端安全/index.html">
 <meta property="og:site_name" content="Gaomy&#39;s blog">
-<meta property="og:description" content="MIME学习">
+<meta property="og:description" content="gao&apos;s blog">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-03T11:04:35.646Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MIME记录">
-<meta name="twitter:description" content="MIME学习">
+<meta name="twitter:title" content="Gaomy&#39;s blog">
+<meta name="twitter:description" content="gao&apos;s blog">
 
 
 
@@ -120,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/10/01/MIME记录/"/>
+  <link rel="canonical" href="http://yoursite.com/categories/前端安全/"/>
 
 
 
 
 
-  <title>MIME记录 | Gaomy's blog</title>
+  <title>分类: 前端安全 | Gaomy's blog</title>
   
 
 
@@ -145,7 +143,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -219,172 +217,55 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
+  
+  
+  
+  <div class="post-block category">
 
-  
+    <div id="posts" class="posts-collapse">
+      <div class="collection-title">
+        <h1>前端安全<small>分类</small>
+        </h1>
+      </div>
 
-  
-  
-  
+      
+        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/10/01/MIME记录/">
+    <header class="post-header">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Gaomy">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/assets/img/pic.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gaomy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
+      <h2 class="post-title">
         
-        
-          <h1 class="post-title" itemprop="name headline">MIME记录</h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
+            <a class="post-title-link" href="/2018/03/09/前端安全/" itemprop="url">
               
-                <span class="post-meta-item-text">发表于</span>
+                <span itemprop="name">前端安全</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-01T21:20:25+08:00">
-                2017-10-01
-              </time>
-            
+            </a>
+        
+      </h2>
 
-            
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2018-03-09T09:21:12+08:00"
+              content="2018-03-09" >
+          03-09
+        </time>
+      </div>
 
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        <p>MIME学习    <a id="more"></a></p>
-<p>1、MIME 全称：”Multipurpose Internet Mail Extensions“  中文：”多用途互联网邮件扩展“，展示的是一系列的电子邮件规范，成为电子邮件实际上地标准。</p>
-<p>2、传统的电子邮件的特点：就是规定电子邮件只能使用ASCII字符。</p>
-<p>这导致了三个结果：</p>
-<p>1）非英语字符都不能在电子邮件中使用；<br>2）电子邮件中不能插入二进制文件（如图片）；</p>
-<p>3）电子邮件不能有附件。</p>
-<p>3、MIME对传统邮件的扩展，表现在它在邮件上加了几条语句，其中重要的3条：</p>
-<p>第一条是：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MIME-Version: 1.0</span><br></pre></td></tr></table></figure>
-<p>说明了MIME版本号</p>
-<p>第二条是：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Content-Type: text/plain; charset=&apos;ISO-8859-1&apos;</span><br></pre></td></tr></table></figure>
-<p>表明了传递信息的类型和编码类型</p>
-<p>类型：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">text/plain：纯文本，文件扩展名.txt</span><br><span class="line">text/html：HTML文本，文件扩展名.htm和.html</span><br><span class="line">image/jpeg：jpeg格式的图片，文件扩展名.jpg</span><br><span class="line">image/gif：GIF格式的图片，文件扩展名.gif</span><br><span class="line">audio/x-wave：WAVE格式的音频，文件扩展名.wav</span><br><span class="line">audio/mpeg：MP3格式的音频，文件扩展名.mp3</span><br><span class="line">video/mpeg：MPEG格式的视频，文件扩展名.mpg</span><br><span class="line">application/zip：PK-ZIP格式的压缩文件，文件扩展名.zip</span><br></pre></td></tr></table></figure>
-<p>整个Content-Type这一行，不仅使用在电子邮件，后来也被移植到了HTTP协议中，所以现在只要是在网上传播的HTTP信息，都带有Content-Type头，以表明信息类型。</p>
-<p>传统邮件不支持ASCII码和二进制数据，所以规定了第三条数据：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Content-transfer-encoding: base64</span><br></pre></td></tr></table></figure>
-<p>base64编码是用于传输二进制数据的方案，Base64将数据作为24位组处理，将该数据映射到四个编码字符。它有时被称为3到4编码。24位组的每6位用作映射表（base64字母表）的索引，以获得编码数据的字符。编码数据的行长限制为76个字符。base64编码中使用的字符，base64字母表，不包括对SMTP或与MIME边界字符串一起使用的连字符的重要特殊字符。</p>
-<p>许多邮件传输代理只能处理短字符的US-ASCII字符。这被称为“7bit”或有时称为“7bit编码”文本。SMTP强加了这个限制。为了在互联网上发送更丰富的文件类型，以便所有的MTA都可以正确处理它们，必须使用某种编码。编码的目的是仅使用7位字符和有限的行长来表示文件的内容。该文件可以是图像文件，可执行文件或任何通用二进制文件。</p>
-<p>虽然定义了五个内容传输编码值，以及可扩展X令牌，base64和quotable-printable是MIME定义的唯一实际的编码方案</p>
-<p><a href="https://msdn.microsoft.com/en-us/library/ms526941(v=exchg.10" target="_blank" rel="noopener">Content-transfer-encoding</a>.aspx)</p>
-
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/MIME/" rel="tag"># MIME</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/09/29/object/" rel="next" title="javascript对象学习--函数不属于任何一个对象">
-                <i class="fa fa-chevron-left"></i> javascript对象学习--函数不属于任何一个对象
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/10/01/计算机网络/" rel="prev" title="计算机网络">
-                计算机网络 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
+    </header>
   </article>
 
 
-
-    <div class="post-spread">
       
     </div>
+
   </div>
+  
+  
+  
+
+  
+
 
 
           </div>
@@ -392,10 +273,6 @@
 
 
           
-
-  
-
-
 
         </div>
         
@@ -614,10 +491,6 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
 
   
 
