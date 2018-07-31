@@ -86,7 +86,7 @@
 <meta property="og:site_name" content="Gaomy&#39;s blog">
 <meta property="og:description" content="关于前端安全问题的总结。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-09T03:03:43.167Z">
+<meta property="og:updated_time" content="2018-03-10T10:58:46.154Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="前端安全">
 <meta name="twitter:description" content="关于前端安全问题的总结。">
@@ -337,6 +337,9 @@
 <p>​       第一步：后端随机产生一个 token，把这个token 保存到 session 状态中；同时后端把这个token 交给前端页面；</p>
 <p>​       第二步：前端页面提交请求时，把 token 加入到请求数据或者头信息中，一起传给后端；</p>
 <p>后端验证前端传来的 token 与 session 是否一致，一致则合法，否则是非法请求</p>
+<p>3、使用refer字段</p>
+<p>通常refer字段的值与请求的网站的域名是一致的，客户端在发起请求的时候，Refer字段也会一起发送，服务器端可以检查客户端发来的refer字段的值，如果不一致，服务器可以拒绝这个有嫌疑的请求。</p>
+<p>这样就很好的防御了CSRF。</p>
 <h4 id="实践："><a href="#实践：" class="headerlink" title="实践："></a>实践：</h4><p><a href="https://www.ibm.com/developerworks/cn/web/1102_niugang_csrf/" target="_blank" rel="noopener">CSRF(跨站请求伪造)</a></p>
 <p><a href="http://netsecurity.51cto.com/art/200811/97281.htm" target="_blank" rel="noopener">CSRF 原理</a></p>
 <p><a href="https://jkchao.cn/article/59de0283c52d5a4ba98b1f0d" target="_blank" rel="noopener">前端安全知识</a></p>
@@ -457,7 +460,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -479,7 +482,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
