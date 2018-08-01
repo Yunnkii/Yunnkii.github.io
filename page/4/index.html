@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="npm," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -79,22 +79,16 @@
 
 
 
-<meta name="description" content="npm 安装依赖报错解决方案">
-<meta name="keywords" content="npm">
-<meta property="og:type" content="article">
-<meta property="og:title" content="npm 安装依赖报错解决方案">
-<meta property="og:url" content="http://yoursite.com/2017/09/05/README/index.html">
+<meta name="description" content="gao&apos;s blog">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Gaomy&#39;s blog">
+<meta property="og:url" content="http://yoursite.com/page/4/index.html">
 <meta property="og:site_name" content="Gaomy&#39;s blog">
-<meta property="og:description" content="npm 安装依赖报错解决方案">
+<meta property="og:description" content="gao&apos;s blog">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2017/09/05/README/xiugai.png">
-<meta property="og:image" content="http://yoursite.com/2017/09/05/README/npm1.png">
-<meta property="og:image" content="http://yoursite.com/2017/09/05/README/npm.png">
-<meta property="og:updated_time" content="2018-03-03T11:04:57.331Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="npm 安装依赖报错解决方案">
-<meta name="twitter:description" content="npm 安装依赖报错解决方案">
-<meta name="twitter:image" content="http://yoursite.com/2017/09/05/README/xiugai.png">
+<meta name="twitter:title" content="Gaomy&#39;s blog">
+<meta name="twitter:description" content="gao&apos;s blog">
 
 
 
@@ -124,13 +118,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/09/05/README/"/>
+  <link rel="canonical" href="http://yoursite.com/page/4/"/>
 
 
 
 
 
-  <title>npm 安装依赖报错解决方案 | Gaomy's blog</title>
+  <title>Gaomy's blog</title>
   
 
 
@@ -149,7 +143,8 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left 
+  page-home">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -222,9 +217,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-
-  <div id="posts" class="posts-expand">
+  <section id="posts" class="posts-expand">
     
+      
 
   
 
@@ -237,7 +232,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/05/README/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/30/元素居中/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Gaomy">
@@ -254,7 +249,9 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">npm 安装依赖报错解决方案</h1>
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/05/30/元素居中/" itemprop="url">元素完全居中</a></h1>
         
 
         <div class="post-meta">
@@ -266,8 +263,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-05T20:03:30+08:00">
-                2017-09-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-30T20:01:31+08:00">
+                2017-05-30
               </time>
             
 
@@ -289,8 +286,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Nodejs/" itemprop="url" rel="index">
-                    <span itemprop="name">Nodejs</span>
+                  <a href="/categories/css/" itemprop="url" rel="index">
+                    <span itemprop="name">css</span>
                   </a>
                 </span>
 
@@ -326,16 +323,16 @@
       
 
       
-        <h4 id="npm-安装依赖报错解决方案"><a href="#npm-安装依赖报错解决方案" class="headerlink" title="npm 安装依赖报错解决方案   "></a>npm 安装依赖报错解决方案   <a id="more"></a></h4><h4 id="1-修改安装源"><a href="#1-修改安装源" class="headerlink" title="1.修改安装源"></a>1.修改安装源</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">npm config set registry https://registry.npm.taobao.org</span><br><span class="line">npm info underscore (配置成功会有很多提示信息)</span><br></pre></td></tr></table></figure>
-<p>提示信息：</p>
-<p><img src="./xiugai.png" alt=""></p>
-<h4 id="2-安装cnpm-命令替代npm"><a href="#2-安装cnpm-命令替代npm" class="headerlink" title="2.安装cnpm 命令替代npm"></a>2.安装cnpm 命令替代npm</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g cnpm --registry=https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
-<p>成功后信息提示</p>
-<p><img src="./npm1.png" alt="命令成功安装提示"></p>
-<h4 id="3-使用-cnpm-命令安装依赖"><a href="#3-使用-cnpm-命令安装依赖" class="headerlink" title="3.使用 cnpm 命令安装依赖"></a>3.使用 cnpm 命令安装依赖</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cnpm install eventproxy --save</span><br></pre></td></tr></table></figure>
-<p>会有如下信息提示</p>
-<p><img src="npm.png" alt="成功安装显示"></p>
-
+        
+          <h4 id="元素完全居中的方法"><a href="#元素完全居中的方法" class="headerlink" title="元素完全居中的方法"></a>元素完全居中的方法</h4>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/05/30/元素居中/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
       
     </div>
     
@@ -350,40 +347,14 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/npm/" rel="tag"># npm</a>
-          
-        </div>
+
+      
+
       
 
       
       
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2017/05/30/元素居中/" rel="next" title="元素完全居中">
-                <i class="fa fa-chevron-left"></i> 元素完全居中
-              </a>
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/09/07/save/" rel="prev" title="npm 的--save和--save-dev参数">
-                npm 的--save和--save-dev参数 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
+        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -393,11 +364,14 @@
   </article>
 
 
+    
+  </section>
 
-    <div class="post-spread">
-      
-    </div>
-  </div>
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
+  </nav>
+
 
 
           </div>
@@ -405,10 +379,6 @@
 
 
           
-
-  
-
-
 
         </div>
         
@@ -429,17 +399,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -503,22 +464,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#npm-安装依赖报错解决方案"><span class="nav-number">1.</span> <span class="nav-text">npm 安装依赖报错解决方案   </span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-修改安装源"><span class="nav-number">2.</span> <span class="nav-text">1.修改安装源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-安装cnpm-命令替代npm"><span class="nav-number">3.</span> <span class="nav-text">2.安装cnpm 命令替代npm</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-使用-cnpm-命令安装依赖"><span class="nav-number">4.</span> <span class="nav-text">3.使用 cnpm 命令安装依赖</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -652,10 +597,6 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
 
   
 
