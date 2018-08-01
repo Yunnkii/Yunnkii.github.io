@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Gaomy&#39;s blog">
 <meta property="og:description" content="有一个需要使用TypeScript 重构的项目，开始学习并研究TypeScript,并记录在此过程中遇到的一些问题及解决方式">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-31T10:35:12.132Z">
+<meta property="og:updated_time" content="2018-08-01T05:49:11.322Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TypeScript实践—关于json 等非js文件的导入">
 <meta name="twitter:description" content="有一个需要使用TypeScript 重构的项目，开始学习并研究TypeScript,并记录在此过程中遇到的一些问题及解决方式">
@@ -302,6 +302,9 @@
       
         <p>有一个需要使用TypeScript 重构的项目，开始学习并研究TypeScript,并记录在此过程中遇到的一些问题及解决方式</p>
 <a id="more"></a>
+<ul>
+<li>对于 .json 文件</li>
+</ul>
 <p>1、对于 typings  中 声明文件 在项目根目录下 ，与 src 文件夹同级，建立typings 目录</p>
 <p>2、对于在ts|tsx文件中引入assets文件，例如  .json|.css|.jpg 文件等,使用原本的</p>
 <p>import name  from ‘’ 方式行不通，原因是 TypeScript处理模块的方式，于是在官网及网上搜索，找到一些常见的解决方案，</p>
@@ -325,7 +328,15 @@
 <p>还有注意的点，</p>
 <p>就是需要在 tsconfig.json 中的配置项中加入typings</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;compilerOptions&quot;: &#123;</span><br><span class="line">        &quot;outDir&quot;: &quot;./dist/&quot;,</span><br><span class="line">        &quot;sourceMap&quot;: true,</span><br><span class="line">        &quot;noImplicitAny&quot;: true,</span><br><span class="line">        &quot;module&quot;: &quot;commonjs&quot;,</span><br><span class="line">        &quot;target&quot;: &quot;es5&quot;,</span><br><span class="line">        &quot;jsx&quot;: &quot;react&quot;,</span><br><span class="line">        &quot;experimentalDecorators&quot;: true 实验性的装饰器语法使用报错</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;include&quot;: [</span><br><span class="line">        &quot;./src/**/*&quot;,</span><br><span class="line">        &quot;./typings/**/*&quot; 将声明文件也要引入</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>未完。。。。</p>
+<ul>
+<li>对于 .css 文件</li>
+</ul>
+<p>1、需要在声明文件中，做出声明</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">declear module &quot;*.css&quot;;</span><br><span class="line">declear module &quot;*.svg&quot;</span><br></pre></td></tr></table></figure>
+<p>2、在使用的地方进行引入</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">import * as logo from &apos;./x.svg&apos;;</span><br><span class="line">import logo from &apos;./x.svg&apos;</span><br><span class="line">import  &apos;./css.css&apos;</span><br></pre></td></tr></table></figure>
+<p>使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;img src = &#123;logo&#125; className = [class]&gt;</span><br></pre></td></tr></table></figure>
 
       
     </div>
