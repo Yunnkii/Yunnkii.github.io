@@ -82,15 +82,18 @@
 <meta name="description" content="详细看了几篇HTTP状态码的文章，在此做出总结与思考 201—POST 请求、ETag 、创建文件相关 请求已经被实现，而且有一个新的资源已经依据请求的需要而建立，且其 URI 已经随Location 头信息返回 说明： 1、HTTP POST请求的结果，已在服务器上成功创建了一个或多个新资源。 2、HTTP headers 中Location header field 包含 URI，指示了创建的">
 <meta name="keywords" content="HTTP 协议">
 <meta property="og:type" content="article">
-<meta property="og:title" content="HTTP协议状态码">
+<meta property="og:title" content="HTTP协议状态码-301、302、Canonical Tags">
 <meta property="og:url" content="http://yoursite.com/2018/07/31/HTTP协议状态码/index.html">
 <meta property="og:site_name" content="Gaomy&#39;s blog">
 <meta property="og:description" content="详细看了几篇HTTP状态码的文章，在此做出总结与思考 201—POST 请求、ETag 、创建文件相关 请求已经被实现，而且有一个新的资源已经依据请求的需要而建立，且其 URI 已经随Location 头信息返回 说明： 1、HTTP POST请求的结果，已在服务器上成功创建了一个或多个新资源。 2、HTTP headers 中Location header field 包含 URI，指示了创建的">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-07-31T14:53:00.985Z">
+<meta property="og:image" content="http://www.johnfdoherty.com/wp-content/uploads/2015/07/301-and-302-Redirect.jpg">
+<meta property="og:image" content="http://www.johnfdoherty.com/wp-content/uploads/2015/07/canonical-url-tag.gif">
+<meta property="og:updated_time" content="2018-08-01T12:29:14.652Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="HTTP协议状态码">
+<meta name="twitter:title" content="HTTP协议状态码-301、302、Canonical Tags">
 <meta name="twitter:description" content="详细看了几篇HTTP状态码的文章，在此做出总结与思考 201—POST 请求、ETag 、创建文件相关 请求已经被实现，而且有一个新的资源已经依据请求的需要而建立，且其 URI 已经随Location 头信息返回 说明： 1、HTTP POST请求的结果，已在服务器上成功创建了一个或多个新资源。 2、HTTP headers 中Location header field 包含 URI，指示了创建的">
+<meta name="twitter:image" content="http://www.johnfdoherty.com/wp-content/uploads/2015/07/301-and-302-Redirect.jpg">
 
 
 
@@ -126,7 +129,7 @@
 
 
 
-  <title>HTTP协议状态码 | Gaomy's blog</title>
+  <title>HTTP协议状态码-301、302、Canonical Tags | Gaomy's blog</title>
   
 
 
@@ -250,7 +253,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">HTTP协议状态码</h1>
+          <h1 class="post-title" itemprop="name headline">HTTP协议状态码-301、302、Canonical Tags</h1>
         
 
         <div class="post-meta">
@@ -324,7 +327,6 @@
 <p>3、拥有链接编辑功能的客户端应当自动把请求的地址修改为从服务器反馈回来的地址</p>
 <p>4、除非这是一个 HEAD 请求，否则响应的实体中应当包含指向新的 URI 的超链接及简短说明</p>
 <p>5、对于某些使用 HTTP/1.0 协议的浏览器，当它们发送的 POST 请求得到了一个301响应的话，接下来的重定向请求将会变成 GET 方式。</p>
-<p>场景：</p>
 <p>302—临时重定向</p>
 <p>1、请求的资源现在临时从不同的 URI 响应请求</p>
 <p>2、新的临时性的 URI 应当在响应的 Location 域中返回</p>
@@ -332,6 +334,96 @@
 <p>4、只有在Cache-Control或Expires中进行了指定的情况下，这个响应才是可缓存的</p>
 <p>5、除非这是一个 HEAD 请求，否则响应的实体中应当包含指向新的 URI 的超链接及简短说明</p>
 <p>6、如果这不是一个 GET 或者 HEAD 请求，那么浏览器禁止自动进行重定向，除非得到用户的确认，因为请求的条件可能因此发生变化</p>
+<p>301和302状态码在面试过程中问的比较多的是二者的区别，</p>
+<p><strong>相同点</strong>：301和302都是表示重定向，在服务端返回301或者302之后，浏览器都会自动跳转到一个新的ＵRL地址，这个地址从响应的Location中取得，（用户看到的就是地址栏变成另外一个地址），</p>
+<p><strong>不同点</strong>：</p>
+<p>1、301HTTP 状态码是管理页面完整和永久重定向的标准，实施此命令，<strong>会将原始页面的大部分链接权限，相关性和排名权力传递给重定向到的页面</strong></p>
+<p>2、301告诉用户和搜索引擎 <strong>原始页面不再相关，并且可以在新页面上找到最相关和最新的信息。</strong></p>
+<p>3、301表示 旧地址的资源被转移，（资源不可访问了）<strong>搜索引擎抓取新内容的同时，将旧网址交换为重定向之后的网址，</strong></p>
+<p>使用 301重定向 效果：</p>
+<ul>
+<li>用户现在将被定向到这个新页面</li>
+<li>对第一个URL的任何链接都应计入新目标URL的排名能力。</li>
+</ul>
+<p>使用301的优点</p>
+<p>使用301重定向有很多充分的理由。对于纯粹的SEO目的，301重定向将保留链接公平，因此新的目标URL很有可能排名。其次，301重定向会<strong>使旧网址相对较快地从搜索引擎索引中删除</strong>，您将<strong>努力优化抓取</strong>。301重定向非常适合于以下方面：</p>
+<ul>
+<li>处理www /非www和尾随/非尾随斜杠问题。</li>
+<li>处理重复的内容问题，例如domain.com/index.php以及由常用的不同CMS引起的其他问题。</li>
+<li>域和URL迁移，例如新的URL结构（通过映射旧的和新的1：1重定向），转移到HTTPS或更改URL的众多其他原因。</li>
+</ul>
+<p>301常见问题：</p>
+<p>因为301重定向是“永久”重定向，所以撤消它意味着搜索引擎将花费一点时间来<strong>发现</strong>和再次<strong>索引</strong>页面。还有就是：</p>
+<p>1）、您可能无法实现HTTP状态代码。也许你没有FTP访问权限，或者你的网页设计师告诉你这是不可能的。无论哪种方式，没有服务器端访问，301根本不是一个选项。</p>
+<p>2），搜索引擎有时需要一段时间才能将您的新页面归属于原始页面的搜索权限。这一切都取决于您的网站和原始网页被搜索引擎抓取的频率。这种延迟意味着301是你不应该依赖的短期或最后一分钟的活动。</p>
+<p>3）、301使用不正确。看到营销人员开发一个全新的网站然后使用301将原始网站的所有页面指向新网站的主页，这是非常常见的。这不是301的目的。这种方法破坏了任何搜索流量的相关性，并可能导致非常高的跳出率。这是一个输/输的情况，不幸的是，这只是许多人中的一个例子。</p>
+<p>302 重定向—当你的排名很好时，302重定向很有效—临时重定向</p>
+<p>302表示，资源还在（仍然可以访问），重定向只是从旧地址转到新地址，<strong>搜索引擎会抓取新的内容保存旧的地址</strong></p>
+<p>302重定向与301重定向的不同之处在于它向搜索引擎发送“暂时消失”信号，这实际上告诉他们“这个URL现在已经移动了，但还要保留它并继续抓取它，因为它可能会很快就会回来。“当你的页面排名很好时，302重定向很有效，除非下面情况  一个新的页面，你希望用户在新的页面消失之前一直停留。</p>
+<p><strong>302重定向的优点：</strong></p>
+<p>302重定向 保持相同的URL排名，并且仍然 将用户传递给可能存在很短时间的新URL。</p>
+<p>当产品退出市场并且您希望将它们发送到类别页面<strong>直到该产品返回</strong>时，通常会使用302重定向  <strong>。</strong>那个粗体部分很重要，因为如果URL永远不会回来（例如，当它返回到网站时被分配了一个新的id），那么你应该使用301而不是302</p>
+<p><strong>302重定向缺点：</strong></p>
+<p>传统的SEO智慧说302重定向没有通过链接公平（有一项研究反驳了这一点<a href="https://www.seo-theory.com/results-of-an-experiment-using-301-and-302-redirects/" target="_blank" rel="noopener">here</a>）</p>
+<p>最好的做法是:</p>
+<p>在页面永久消失时使用301重定向，</p>
+<p>并在页面可能返回时使用302重定向。</p>
+<p>302重定向也会保留索引中的旧URL，搜索引擎会继续抓取它，因此请确保您确实希望原始页面保持其当前排名的术语的排名。</p>
+<p>这是一个说明301或302的图形：</p>
+<p><img src="http://www.johnfdoherty.com/wp-content/uploads/2015/07/301-and-302-Redirect.jpg" alt=""></p>
+<p><strong>重定向</strong>： 将网络请求重新定向转向其他地址（网页重定向、域名重定向、路由选择变化）</p>
+<p>为什么进行重定向？</p>
+<p>很明显是之前的网页的地址发生了变化，</p>
+<p><strong>使用 301情景</strong>：</p>
+<p>1.内容实际上已移动，旧网址将永远不会返回;</p>
+<p>2.出于任何原因移动网址，并希望新网址排名;</p>
+<p>3.已完成广告系列，并且希望这些链接现在计入另一个页面</p>
+<p><strong>使用302情景</strong></p>
+<ol>
+<li>内容确实只是暂时移动，希望原始URL保持排名，但是用户可以转到新的URL;</li>
+<li>有一个类似于产品或类别的页面，一旦库存再次存在，它将会返回。如果相同的商品ID将应用于新产品或SKU，则仅使用302</li>
+</ol>
+<blockquote>
+<p>几乎每个网站都会在需要实施重定向时达到目的。无论是因为您移动内容还是移动到新域，重定向都可以帮助您保持流量的流动，传递引擎分配的URL值，并帮助保持书签为您的忠实访问者服务。</p>
+</blockquote>
+<p>Canonical Tags—与SEO优化相关</p>
+<p>是一个元标记放在页面的<head>中，指向页面上包含的信息的  <strong>原始来源</strong></head></p>
+<p>原始来源 是说 这篇page 之前是哪个地址</p>
+<p>例如：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;link rel =“ canonical ” href =“ &lt;http://www.trulia.com/rental-community/9000058375/AVA-55-Ninth-55-9th-St-San-Francisco-CA-94103/&gt; ”/&gt;</span><br></pre></td></tr></table></figure>
+<p>规范标签是在2009年推出的，<a href="http://moz.com/blog/canonical-url-tag-the-most-important-advancement-in-seo-practices-since-sitemaps" target="_blank" rel="noopener">这篇关于Moz的帖子</a>  深入介绍了它，甚至称它为“自站点地图以来SEO实践中最重要的进步。”当然，这是5年前，但即使在<a href="http://moz.com/products/api/updates" target="_blank" rel="noopener">最新的Mozscape</a>中也是如此，只有18.02％的URL具有规范标记（canonical tag）（甚至是自引用标记）。</p>
+<p>使用 canonical tag的优点：</p>
+<ul>
+<li>您的网站或其他网站上的内容可能重复时，规范标记可用于告知Google</li>
+<li>重复的内容可以扼杀您的自然流量，特别是在流量的长尾中</li>
+<li>小规模的规范标签可以处理您网站上的重复内容</li>
+</ul>
+<p>规范标记并不总是能够使URL退出索引或充分优化您的爬网。但是，如果您为用户提供多个视图或为广告/网页浏览目的而分页，但您仍希望搜索引擎将文章的完整，单页，长格式版本编入索引以进行排名，那么它可能非常有用。</p>
+<p>好像英文读起来更顺</p>
+<blockquote>
+<p>A canonical tag is useful to tell Google when content on your site or another site may be duplicated. As SEO professionals know, duplicate content can kill your organic traffic, especially in the long tail of traffic.A canonical tag on a small scale can work on duplicate content on your site. It is also useful, and meant, to be used on other sites who syndicate your content to tell Google where the original piece of content that should be ranked exists. A canonical tag will not always work to get URLs to drop out of the index or optimize your crawling sufficiently. However, it can be really useful if you have multiple views for your users or pagination broken up for advertising/pageview purposes but you still want the search engines to index the full, one-page, longform version of the article for ranking.</p>
+</blockquote>
+<p>缺点：</p>
+<p>虽然自我引用规范可以在您的网站被抓取时节省流量，但在您自己的域中复制的大量数百万个网址上，抓取带宽变得难以处理，并且会从您的资金页面中获取重要的抓取内容。并且，当URL 404s最终时，链接权益将不会被传递到规范URL。你真的在你的网站404上泄露了非常重要的链接资产。</p>
+<blockquote>
+<p>A canonical tag, when used wrongly, can be a band-aid on a wound that requires stitches or even surgery. While a self-referencing canonical can save your traffic if your site is scraped, on a massive scale of millions of URLs duplicated within your own domain the crawl bandwidth becomes unwieldy and takes important crawls away from your money pages. And, when the URL 404s eventually, the link equity will not be passed to the canonical URL. You literally leak very important link equity across your site’s 404s</p>
+</blockquote>
+<p>最后：</p>
+<p>Canonical标签可以在您的内容被抓取或联合时帮助您，因为它告诉搜索爬虫（至少尊重规范的内容）是内容的原始来源。但是，在您自己的域中大规模地进行，您通常最好在您的网站上进行一些重构（也就是手术）以解决重复的内容问题，而不是使用规范的创可贴。搜索引擎已经说过，如果你使用太多的规范并发送太多令人困惑的信号，他们可能会选择忽略你的规范指令。Rand Fishkin有这个着名的关于规范的图形：</p>
+<blockquote>
+<p>Canonical tags can help you when your content is scraped or syndicated because it tells the search crawlers (the ones that respect canonicals, at least) the original source of the content. On a large scale within your own domain, though, you’re usually better off doing a bit of refactoring (aka surgery) on your site to solve your duplicate content issues instead of using the canonical band-aid. The search engines have said that if you use too many canonicals and send too many confusing signals, they might choose to ignore your canonical directives. Rand Fishkin has this well-known graphic about canonicals:</p>
+</blockquote>
+<p><img src="http://www.johnfdoherty.com/wp-content/uploads/2015/07/canonical-url-tag.gif" alt=""></p>
+<p>使用规范</p>
+<ol>
+<li>为用户提供多个视图，但希望避免重复内容;</li>
+<li>需要消除可能导致重复内容问题的内容参数（例如使用非UTM跟踪参数）</li>
+</ol>
+<p>原文链接<a href="https://www.johnfdoherty.com/canonical-301-redirect-302-redirect/" target="_blank" rel="noopener">使用301or302</a></p>
+<p><a href="https://moz.com/blog/canonical-url-tag-the-most-important-advancement-in-seo-practices-since-sitemaps" target="_blank" rel="noopener">canonical tag</a></p>
+<p><a href="https://moz.com/learn/seo/redirection" target="_blank" rel="noopener">redirection</a></p>
+<p><a href="https://www.seo-theory.com/results-of-an-experiment-using-301-and-302-redirects/" target="_blank" rel="noopener">redirection</a></p>
+<p><a href="https://blog.hubspot.com/blog/tabid/6307/bid/7430/what-is-a-301-redirect-and-why-should-you-care.aspx" target="_blank" rel="noopener">301</a></p>
 <p>304—Not Modified</p>
 
       
