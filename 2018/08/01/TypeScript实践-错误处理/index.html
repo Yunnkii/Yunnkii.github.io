@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Gaomy&#39;s blog">
 <meta property="og:description" content="1、错误 “import sources within a group must be alphabetized” 是说 引入资源，应该有顺序 需要使用  1234import * as source1 from &amp;apos;../../../A&amp;apos;import * as source2 from &amp;apos;../../../B&amp;apos;import * as source1 from">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-05T07:04:59.594Z">
+<meta property="og:updated_time" content="2018-08-07T10:50:21.587Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TypeScript实践-错误处理">
 <meta name="twitter:description" content="1、错误 “import sources within a group must be alphabetized” 是说 引入资源，应该有顺序 需要使用  1234import * as source1 from &amp;apos;../../../A&amp;apos;import * as source2 from &amp;apos;../../../B&amp;apos;import * as source1 from">
@@ -318,12 +318,14 @@
 <p>decorate<foo>() (Foo)</foo></p>
 <p>正确的</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">decorate&lt;typeof Foo&gt; ()(Foo)</span><br><span class="line">decorate&lt;Foo&gt; () (new Foo)</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <p> 3、对于那个react-markdown文件的导入问题</p>
 <p>一开始查看了 react-markdown 这个库 导出来的是个什么东西，发现是个函数，还写了个这个函数的声明文件</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">declare function name(props： any): any</span><br><span class="line">export = name</span><br></pre></td></tr></table></figure>
-<p>是没有用的 后面查看 文档渲染出来的 text 打印出来看 发现没有导出来 markdown 文件</p>
+<p>是没有用的</p>
+<p> 后面查看 文档渲染出来的 text 打印出来看 发现没有导出来 markdown 文件</p>
 <p>于是 修改markdown 文件的路径 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import release from &apos;.md&apos;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import releasepath from &apos;.md&apos;</span><br></pre></td></tr></table></figure>
 <p>其他的都没有改，可以渲染了</p>
 <p>另外：</p>
 <p>对于 package.json 文件，没有使用这样的引入方式</p>
@@ -331,6 +333,22 @@
 <p>而是 </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import &#123; pname &#125; from &apos;.json&apos;</span><br></pre></td></tr></table></figure>
 <p>也是可以的</p>
+<p>4、一个 interface 属性|方法不能初始化 、一个Type属性|方法不能初始化</p>
+<p>5、window.location = “#” 报错 后面使用 window.localtion.href  后来使用的是  window.location.href = ‘’<br>​      因为 TypeScript  会认为  window.location是一个对象 但是 “#” 不是 Location 对象的类型 ,但是官网上的介绍又说 localtion后面可以跟一个string 、 </p>
+<p>6、对于一个state的修改 、不再使用之前的那种接口声明的方式，因为state 是 一个只读属性 不可以通过 this.state.xxx = ‘’ 来修改，</p>
+<p>这里使用显式的 Readonly 定义 state  属性，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">export const initialState = &#123; redict: false &#125;</span><br><span class="line">export type IState = Readonly&lt;typeof initialState&gt;;</span><br><span class="line">class xx &#123;</span><br><span class="line">    readonly state: Istate = initialState;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>7、对于引入的js 文件，这里没有修改 API.js为  .tsx </p>
+<p>而是为 API.js 定义了声明文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">declare module &apos;*.js&apos;</span><br></pre></td></tr></table></figure>
+<p>8、为事件参数 添加类型，了解了简单的两种 事件的参数类型 第一种用于  submit  第二种用于  鼠标事件<click>这些  还要看看官网上的其他事件参数</click></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">onsubmit(e: FormEvent): void</span><br><span class="line">onClick(e: MouseEvent): void</span><br></pre></td></tr></table></figure>
+<p>为这些事件的 e 添加类型  有些类型对不上，可以在错误提示中看到正确类型</p>
+<p>9、处理错误：</p>
+<p>Argument of type “componentClass&lt;Pick&lt;any,never&gt;,componentState&gt;” is not assignable to para of type ‘ComponnetConstructor&lt;Pick&lt;any,never&gt;&amp; InjectIntlProps&gt;’</p>
+<p>很明显 还是形参实参的类型对不上，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">React.component&lt;any&amp;InjectIntlProps,any &gt;</span><br><span class="line">export default injectIntl&lt;any&gt;(AuthFormWrapper)</span><br></pre></td></tr></table></figure>
+<p>其实每次解决这种错误的时候都需要看看 报错的信息</p>
 
       
     </div>
@@ -445,7 +463,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -467,7 +485,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
