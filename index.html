@@ -232,6 +232,692 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/20/现代样式：css也要模块化/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Gaomy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/assets/img/pic.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gaomy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/20/现代样式：css也要模块化/" itemprop="url">现代样式：css也要模块化</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-20T15:04:19+08:00">
+                2018-08-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="问题起源："><a href="#问题起源：" class="headerlink" title="问题起源："></a>问题起源：</h4><blockquote>
+<p>css的全局特性：css 全部作为全局样式的形式，容易造成命名冲突</p>
+</blockquote>
+<p>####css 模块化的概念：</p>
+<p>css 应该时有它的作用域的，即：</p>
+<h4 id="发展的过程"><a href="#发展的过程" class="headerlink" title="发展的过程"></a>发展的过程</h4><p>1.在全局作用域问题上，早期的做法：</p>
+<ul>
+<li>OOCSS</li>
+<li>BEM</li>
+</ul>
+<p>都是提供一种一种方式模拟健全的作用域规则，本质上还是靠程序员自身的代码规则约束，没有在根本上解决问题</p>
+<p>2.webpack的出现</p>
+<p>一切皆模块，将css也是作为模块处理</p>
+<p>通过css-loader—local-scope实现的：</p>
+<p>webpack配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">loaders: [</span><br><span class="line">  ...</span><br><span class="line">  &#123;</span><br><span class="line">    test: /\.css$/,</span><br><span class="line">    loader: &apos;css?localIdentName=[name]__[local]___[hash:base64:5]&apos;</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<p>使用方式：</p>
+<p>引入：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import styles from &apos;./MyComponent.css&apos;;</span><br></pre></td></tr></table></figure>
+<p>css文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">:local(.foo)&#123;</span><br><span class="line">    color: red;</span><br><span class="line">&#125;</span><br><span class="line">:local(.bar)&#123;</span><br><span class="line">    color:blue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译成：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.MyComponent__foo___1rJwx &#123; … &#125;</span><br></pre></td></tr></table></figure>
+<p>很明显，<code>:local</code> 表示在局部作用域中使用的类名</p>
+<p>在使用css的地方这样写：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import styles from &apos;./MyComponent.css&apos;;</span><br><span class="line">import React, &#123; Component &#125; from &apos;react&apos;;</span><br><span class="line">export default class MyComponent extends Component &#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    return (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;div className=&#123;styles.foo&#125;&gt;Foo&lt;/div&gt;</span><br><span class="line">        &lt;div className=&#123;styles.bar&#125;&gt;Bar&lt;/div&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这样：不用在所有的类名添加冗长的前缀来模拟范围，多个组件可以自定义自己的foo和bar标识符，可以大胆修改我们的CSS，不用小心翼翼地怕影响其他页面的元素</p>
+<p>重大的突破：</p>
+<blockquote>
+<p>编写可维护的CSS现在是值得提倡的，但不是通过谨慎地准守一个命名约定，而是在开发过程中通过独立的封装</p>
+</blockquote>
+<p>这样也会引发一个问题：</p>
+<p>如果大部分的css都需要是全局的，特殊的部分比较少？</p>
+<p>引入局部作用域对我们处理CSS有重大的的连锁反应。命名规范，重用模式，潜在的样式抽离，分包等等，都会直接受到这种转变的影响</p>
+<p>最终发展为：</p>
+<p>在css-loader上通过一个module的标志可以支持CSS Modules</p>
+<p>那么webpack官网上讲解的写法：</p>
+<p>modules—启用css模块规范</p>
+<p>关于写法：</p>
+<ul>
+<li>如果使用webpack中的modules的配置的话，默认就是scoped的local范围，即在本组件中使用</li>
+<li>如果需要使用全局的，可以在样式后面跟相应的全局样式，如：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">:global(.title1) &#123;</span><br><span class="line">  color: green;</span><br><span class="line">&#125;</span><br><span class="line">.title .subTitle :global(.title1)  &#123; color: blue; &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>我一直在想的嵌套的<code>lcoal</code>写法应该怎么写，发现不能使用</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">:local(.title .subTitle)&#123;</span><br><span class="line">    color: blue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>会出现警告，这不是正确的写法，但还是会渲染出来</p>
+<ul>
+<li>官方给出的</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">:local(.className) &#123; background: red; &#125;</span><br><span class="line">:local .className &#123; color: green; &#125;</span><br><span class="line">:local(.className .subClass) &#123; color: green; &#125;</span><br><span class="line">:local .className .subClass :global(.global-class-name) &#123; color: blue; &#125;</span><br></pre></td></tr></table></figure>
+<p>一开始不理解，但重要的使其原理，</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    loader: &quot;css-loader&quot;,</span><br><span class="line">    options: &#123;</span><br><span class="line">        modules: true,</span><br><span class="line">        localIdentName: &apos;[path][name]__[local]--[hash:base64:5]&apos;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后渲染出来的类名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">src-App__subTitle--NDKro</span><br><span class="line">src: 上层文件夹名称</span><br><span class="line">App: 文件名</span><br><span class="line">subTitle: 类名</span><br><span class="line">NDKro：哈希值</span><br></pre></td></tr></table></figure>
+<p>每当写一个类的时候，类似这样</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:local(.className) &#123; background: red; &#125; == .className &#123; background: red; &#125;</span><br></pre></td></tr></table></figure>
+<p>默认就是 local ，webpack会为其添加前述的完成名称</p>
+<p>但如果写的是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:global(.className) &#123; background: red; &#125;</span><br></pre></td></tr></table></figure>
+<p>渲染在页面上只是保留原有的名称，<code>.className</code> </p>
+<p>所以解析一下这句代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:local .className .subClass :global(.global-class-name) &#123; color: blue; &#125;</span><br></pre></td></tr></table></figure>
+<p>使用局部作用域中的 .className, .subClass，这里真实的class 是自动化生成的复杂的class</p>
+<p>而加了global的 则是使用原本声明的类名即简单的类名</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">:local(.title)&#123;</span><br><span class="line">  color: red;</span><br><span class="line">&#125;</span><br><span class="line">:global(.title)&#123;</span><br><span class="line">  color: bisque;</span><br><span class="line">&#125;</span><br><span class="line">:local .title .subTitle .title1 &#123; color: blue; &#125;</span><br></pre></td></tr></table></figure>
+<p>一般写法是这样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;span className=&#123; styles.title &#125;&gt;&lt;/span&gt;</span><br><span class="line">&lt;span className=&quot;title&quot;&gt;&lt;/span&gt;</span><br></pre></td></tr></table></figure>
+<p>上面的解析就是： 找到局部的 title， 下面的局部的subTitle， 下面的局部的title1，将相应的元素的样式设置成blue</p>
+<p>但是如果是 上面写样式的第二种写法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;span className=&quot;title&quot;&gt;&lt;/span&gt;</span><br></pre></td></tr></table></figure>
+<p>就直接使用的全局的样式</p>
+<p>样式声明是这样</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:local .title .subTitle :global(.title1) &#123; color: blue; &#125;</span><br></pre></td></tr></table></figure>
+<p>上面的解析就是： 找到局部的 title， 下面的局部的subTitle， 下面的全局的title1类，将相应的元素的样式设置成blue</p>
+<p><strong>其实，更合理的写法，不应该将全局和局部的样式写在一起，应该全局一个文件，局部一个文件，分别引入这样更合理一些，在局部样式种夹杂更多的全局样式，会比较混乱。</strong></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/17/leetcode/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Gaomy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/assets/img/pic.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gaomy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/17/leetcode/" itemprop="url">未命名</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-17T19:53:15+08:00">
+                2018-08-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/08/portal-遇到的问题整理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Gaomy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/assets/img/pic.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gaomy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/08/portal-遇到的问题整理/" itemprop="url">portal 遇到的问题整理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-08T11:42:26+08:00">
+                2018-08-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1.css 的问题</p>
+<p>使用  scoped  使得css 只是在当前作用域中有效,更多的 scoped 的信息</p>
+<p>:</p>
+<p>2.图片引入 </p>
+<ul>
+<li>背景图</li>
+</ul>
+<p>在style 样式中正常书写即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">background: url(&apos;../../x.png&apos;) np-repeat;</span><br><span class="line">background-size: cover</span><br></pre></td></tr></table></figure>
+<p>background-size: 的各个属性:</p>
+<ul>
+<li>如果想让图片以动态引入的方式传进去</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;img</span><br><span class="line">    :src=&quot;imgUrl&quot;</span><br><span class="line">    :alt=&quot;slide.headline&quot;</span><br><span class="line">&gt;</span><br><span class="line">import imgUrl from &apos;../../assets/images/solution.png&apos;;</span><br><span class="line">export default&#123;</span><br><span class="line">    data() &#123;</span><br><span class="line">        return &#123;</span><br><span class="line">            url: imgUrl</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;ul class=&quot;imgList clearfix&quot;&gt;</span><br><span class="line">        &lt;li</span><br><span class="line">          v-for=&quot;(item, index) in Partners&quot;</span><br><span class="line">          :key=&quot;index&quot;</span><br><span class="line">          class=&quot;imgLi fl&quot;</span><br><span class="line">        &gt;</span><br><span class="line">          &lt;a :href=&quot;item.url&quot;&gt;</span><br><span class="line">            &lt;img :src=&quot;item.imgUrl&quot; &gt;</span><br><span class="line">          &lt;/a&gt;</span><br><span class="line">        &lt;/li&gt;</span><br><span class="line">&lt;/ul&gt;</span><br></pre></td></tr></table></figure>
+<p>3.Vue 中的子组件与父组件之间的事件及数据的传递</p>
+<ul>
+<li>事件传递</li>
+</ul>
+<p>父组件引入子组件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">	&lt;IntroVideo</span><br><span class="line">      v-if=&quot;videoContainer&quot;</span><br><span class="line">      @stop=&quot;stopVideo&quot;</span><br><span class="line">      @getVideoElement=&quot;getVideoElement&quot;</span><br><span class="line">    /&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">import IntroVideo from &apos;&apos;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">    components: &#123;</span><br><span class="line">        IntroVideo</span><br><span class="line">    &#125;,</span><br><span class="line">    methods: &#123;</span><br><span class="line">        getVideoElement() &#123;</span><br><span class="line">		&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>子组件在自己的methods 中写好触发事件的方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">methods: &#123;</span><br><span class="line">    playerReadied(player) &#123;</span><br><span class="line">      player.currentTime(0);</span><br><span class="line">      this.$emit(&apos;getVideoElement&apos;, player);</span><br><span class="line">    &#125;,</span><br><span class="line">    stopVideo() &#123;</span><br><span class="line">      this.$emit(&apos;stop&apos;);</span><br><span class="line">    &#125;,</span><br><span class="line">    onPlayerPlay(player) &#123;</span><br><span class="line">      this.$emit(&apos;getVideoElement&apos;, player);</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
+<p>这里的 stop getVideoElement 是父组件中声明的,父组件也在自己的methods 中声明触发事件时的执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">getVideoElement() &#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>数据传递</li>
+</ul>
+<p>父组件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;PlatformFeatCarousel :slideList=&quot;slideList&quot;/&gt;</span><br><span class="line">data() &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      slideList: [</span><br><span class="line">        &#123;</span><br><span class="line">          headline: &apos;dataMag&apos;,</span><br><span class="line">          url: &apos;&apos;,</span><br><span class="line">          imgUrl: FeatDatamag,</span><br><span class="line">          description: &apos;dataMagDesc&apos;,</span><br><span class="line">        &#125;,</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>子组件接收</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">export  default &#123;</span><br><span class="line">    props: &#123;</span><br><span class="line">      slideList: &#123;</span><br><span class="line">          type: Array,</span><br><span class="line">          required: true</span><br><span class="line">      &#125;  </span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后在模板中引用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;div</span><br><span class="line">    v-for=&quot;(slide, index) in slideList&quot;</span><br><span class="line">    :key=&quot;index&quot;</span><br><span class="line">    class=&quot;swiper-slide&quot;</span><br><span class="line">&gt;</span><br><span class="line">    &lt;h3 class=&quot;subTit&quot;&gt;&#123;&#123; $t(`message.$&#123;slide.headline&#125;`) &#125;&#125;&lt;/h3&gt;</span><br><span class="line">    &lt;p class=&quot;description&quot;&gt;&#123;&#123; $t(`message.$&#123;slide.description&#125;`) &#125;&#125;			   &lt;/p&gt;</span><br><span class="line">    &lt;img</span><br><span class="line">    :src=&quot;slide.imgUrl&quot;</span><br><span class="line">    :alt=&quot;slide.headline&quot;</span><br><span class="line">    &gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>​</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">mounted() &#123;</span><br><span class="line">    this.$nextTick(() =&gt; &#123;</span><br><span class="line">      new Swiper(&apos;#platFormFeatCarousel&apos;, &#123;</span><br><span class="line">        direction: &apos;horizontal&apos;,</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;,</span><br></pre></td></tr></table></figure>
+<p>Vue 组件的生命周期  如何应用</p>
+<p>父子组件传递数据及触发事件还有哪些方式</p>
+<ul>
+<li>将需要显示修改的数据放入 data 中,当需要传给父组件的时候,使用事件回传数据,保持了组件的独立与解耦</li>
+</ul>
+<p>理解双向数据绑定</p>
+<p>非父子组件即兄弟组件之间的数据传递</p>
+<ul>
+<li><p>方式1——使用 Vue官方推荐的 Event bus 的方式</p>
+<p>1.创建一个eventBus.js</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">import Vue from &apos;vue&apos;;</span><br><span class="line">export const EventBus = new Vue();</span><br></pre></td></tr></table></figure>
+<p>引入该eventBus</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div class=&quot;pleeease-click-me&quot; @click=&quot;emitGlobalClickEvent()&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">// Import the EventBus we just created.</span><br><span class="line">import &#123; EventBus &#125; from &apos;./event-bus.js&apos;;</span><br><span class="line"></span><br><span class="line">export default &#123;</span><br><span class="line">  data() &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      clickCount: 0</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  methods: &#123;</span><br><span class="line">    emitGlobalClickEvent() &#123;</span><br><span class="line">      this.clickCount++;</span><br><span class="line">      // Send the event on a channel (i-got-clicked) with a payload (the click count.)</span><br><span class="line">      EventBus.$emit(&apos;i-got-clicked&apos;, this.clickCount);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// Import the EventBus.</span><br><span class="line">import &#123; EventBus &#125; from &apos;./event-bus.js&apos;;</span><br><span class="line"></span><br><span class="line">// Listen for the i-got-clicked event and its payload.</span><br><span class="line">EventBus.$on(&apos;i-got-clicked&apos;, clickCount =&gt; &#123;</span><br><span class="line">  console.log(`Oh, that&apos;s nice. It&apos;s gotten $&#123;clickCount&#125; clicks! :)`)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>Removing Event Listeners</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// Import the EventBus we just created.</span><br><span class="line">import &#123; EventBus &#125; from &apos;./event-bus.js&apos;;</span><br><span class="line"></span><br><span class="line">// The event handler function.</span><br><span class="line">const clickHandler = function(clickCount) &#123;</span><br><span class="line">  console.log(`Oh, that&apos;s nice. It&apos;s gotten $&#123;clickCount&#125; clicks! :)`)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// Listen to the event.</span><br><span class="line">EventBus.$on(&apos;i-got-clicked&apos;, clickHandler);</span><br><span class="line"></span><br><span class="line">// Stop listening.</span><br><span class="line">EventBus.$off(&apos;i-got-clicked&apos;, clickHandler);</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p> 理解: 采用一种类似事件监听的方式 , 这种 eventBus  是全局的,如果你要传递一个数据,需要引入这个Bus,并通过这个bus 触发事件,传出数据,接收数据的另一端也是需要引入这个Bus 使用 这个Bus 的相同的事件监听来获得数据.</p>
+</blockquote>
+<p>问题:</p>
+<p>对于监听的第一个参数应该如何确定</p>
+<p>如果要传递的数据非常多,多指的是多个组件都要传,还要接收数据</p>
+<p>这种方式还可行??</p>
+<ul>
+<li>方式二——使用 Vuex进行状态管理</li>
+</ul>
+<p>Vue 中如何与后台进行数据交互</p>
+<p>国际化 在Vue 中的应用</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/08/ES6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Gaomy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/assets/img/pic.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gaomy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/08/ES6/" itemprop="url">ES6</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-08T09:55:40+08:00">
+                2018-08-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>1、let与var </p>
+<ul>
+<li>let 声明具有块级作用域 (如果没有块: 用于计数的循环变量泄露为全局变量)</li>
+</ul>
+<p>对于一段代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var a = [];</span><br><span class="line">for (var i = 0; i &lt; 10; i++) &#123;</span><br><span class="line">  a[i] = function () &#123;</span><br><span class="line">    console.log(i);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>用 var 声明的变量是全局的 这里的i 就是一个，就是全局的i,每次循环 i的值都会发生变化，赋给数组的函数内部的console.log(i) 指的就是外部的i</p>
+<blockquote>
+<p>理解: 数组元素的[i] 与console.log(i)的i 不同,元素这里是立即会获取 增长的i 但是 console.log(i) 只是一个声明,在执行的时候,再去拿i 的值,它拿到的i 的值,是最后增长结束的 i的值,下面这样会有不同</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var a = [];</span><br><span class="line">for (var i = 0; i &lt; 10; i++) &#123;</span><br><span class="line">  a[i] = function () &#123;</span><br><span class="line">    console.log(i);</span><br><span class="line">  &#125;();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>立即执行的话，会不同 就是输出理想的 1-9</p>
+<p>如果使用 let</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var a = [];</span><br><span class="line">for (let i = 0; i &lt; 10; i++) &#123;</span><br><span class="line">  a[i] = function () &#123;</span><br><span class="line">    console.log(i);</span><br><span class="line">  &#125;;</span><br><span class="line">&#125;</span><br><span class="line">a[6](); // 6</span><br></pre></td></tr></table></figure>
+<p>这里 i 就是在本轮循环中有效，每次循环的i 都是一个新的变量</p>
+<p> JavaScript 引擎内部会记住上一轮循环的值，初始化本轮的变量<code>i</code>时，就在上一轮循环的基础上进行计算</p>
+<p><code>for</code>循环还有一个特别之处，</p>
+<blockquote>
+<p>就是设置循环变量的那部分是一个父作用域，而循环体内部是一个单独的子作用域</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">for (let i = 0; i &lt; 3; i++) &#123;</span><br><span class="line">  let i = &apos;abc&apos;;</span><br><span class="line">  console.log(i);</span><br><span class="line">&#125;</span><br><span class="line">// abc</span><br><span class="line">// abc</span><br><span class="line">// abc</span><br></pre></td></tr></table></figure>
+<ul>
+<li>let 声明 不存在变量提升</li>
+</ul>
+<p>var 声明变量,会发生提升,变量可以在声明之前使用 值 为 undefined</p>
+<ul>
+<li>声明之前是不能使用的（临时性死区）</li>
+</ul>
+<ul>
+<li>不允许重复声明</li>
+</ul>
+<p>不能在函数内部重新声明参数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">function func(arg) &#123;</span><br><span class="line">  let arg; // 报错</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function func(arg) &#123;</span><br><span class="line">  &#123;</span><br><span class="line">    let arg; // 不报错</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>没有块级作用域  易造成 用于计数的循环变量泄露为全局变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var s = &apos;hello&apos;;</span><br><span class="line"></span><br><span class="line">for (var i = 0; i &lt; s.length; i++) &#123;</span><br><span class="line">  console.log(s[i]); </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">console.log(i); // 5</span><br></pre></td></tr></table></figure>
+<p>上面代码中，变量<code>i</code>只用来控制循环，但是循环结束后，它并没有消失，泄露成了全局变量。</p>
+<p>const  声明一个只读的常量</p>
+<p>本质: </p>
+<blockquote>
+<p>并不是变量的值不得改动，而是变量指向的那个内存地址所保存的数据不得改动.</p>
+<p>对于简单类型的数据（数值、字符串、布尔值），值就保存在变量指向的那个内存地址，因此等同于常量。但对于复合类型的数据（主要是对象和数组），变量指向的内存地址，保存的只是一个指向实际数据的指针，<code>const</code>只能保证这个指针是固定的（即总是指向另一个固定的地址），至于它指向的数据结构是不是可变的，就完全不能控制了</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const foo = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">// 为 foo 添加一个属性，可以成功</span><br><span class="line">foo.prop = 123;</span><br><span class="line">foo.prop // 123</span><br><span class="line"></span><br><span class="line">// 将 foo 指向另一个对象，就会报错</span><br><span class="line">foo = &#123;&#125;; // TypeError: &quot;foo&quot; is read-only</span><br></pre></td></tr></table></figure>
+<p>理解一下：</p>
+<p>foo 指向的是一个内存地址这个地址指向了一个数组或者对象，使用const 声明后，这个地址就只能一直指向这一个 数组或者对象，不能指向其他</p>
+<blockquote>
+<p>常量<code>foo</code>储存的是一个地址，这个地址指向一个对象。不可变的只是这个地址，即不能把<code>foo</code>指向另一个地址，但对象本身是可变的，所以依然可以为其添加新属性。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const a = [];</span><br><span class="line">a.push(&apos;Hello&apos;); // 可执行</span><br><span class="line">a.length = 0;    // 可执行</span><br><span class="line">a = [&apos;Dave&apos;];    // 报错</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>常量<code>a</code>是一个数组，这个数组本身是可写的，但是如果将另一个数组赋值给<code>a</code>，就会报错</p>
+</blockquote>
+<p>如果需要冻结一个对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const foo = Object.freeze(&#123;&#125;);</span><br><span class="line">// 常规模式时，下面一行不起作用；</span><br><span class="line">// 严格模式时，该行会报错</span><br><span class="line">foo.prop = 123;</span><br></pre></td></tr></table></figure>
+<p>ES6 中声明变量</p>
+<blockquote>
+<p>从 ES6 开始 全局变量将逐步与顶层对象的属性脱钩。<code>let</code>命令、<code>const</code>命令、<code>class</code>命令声明的全局变量，不属于顶层对象的属性。</p>
+</blockquote>
+<p>顶层对象不统一</p>
+<ul>
+<li>浏览器顶层是 window,Node 和web worker 没有window</li>
+<li>浏览器和 web worker  self 指向顶层，但Node没有self</li>
+<li>Node 顶层是 global,其他环境都不支持。</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/06/304-status-code/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -745,519 +1431,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/31/TypeScript实践-关于json 等非js文件的导入/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Gaomy">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/assets/img/pic.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gaomy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/31/TypeScript实践-关于json 等非js文件的导入/" itemprop="url">TypeScript实践—关于json 等非js文件的导入</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-31T17:02:42+08:00">
-                2018-07-31
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>有一个需要使用TypeScript 重构的项目，开始学习并研究TypeScript,并记录在此过程中遇到的一些问题及解决方式</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/07/31/TypeScript实践-关于json 等非js文件的导入/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/09/css/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Gaomy">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/assets/img/pic.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gaomy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/09/css/" itemprop="url">css</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-09T20:03:46+08:00">
-                2018-07-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>对于一些css 的总结</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/07/09/css/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/06/数据类型/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Gaomy">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/assets/img/pic.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gaomy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/06/数据类型/" itemprop="url">数据类型</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-06T14:50:50+08:00">
-                2018-04-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/javascript/" itemprop="url" rel="index">
-                    <span itemprop="name">javascript</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/16/关于node-js的路径拼接/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Gaomy">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/assets/img/pic.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gaomy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/16/关于node-js的路径拼接/" itemprop="url">关于node.js的路径拼接</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-16T13:55:40+08:00">
-                2018-03-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>遇到的Node.js路径拼接的疑惑。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/16/关于node-js的路径拼接/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1312,7 +1485,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">31</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1334,7 +1507,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
