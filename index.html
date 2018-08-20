@@ -302,8 +302,7 @@
 
       
         
-          
-            <h4 id="问题起源："><a href="#问题起源：" class="headerlink" title="问题起源："></a>问题起源：</h4><blockquote>
+          <h4 id="问题起源："><a href="#问题起源：" class="headerlink" title="问题起源："></a>问题起源：</h4><blockquote>
 <p>css的全局特性：css 全部作为全局样式的形式，容易造成命名冲突</p>
 </blockquote>
 <p>####css 模块化的概念：</p>
@@ -313,76 +312,14 @@
 <li>OOCSS</li>
 <li>BEM</li>
 </ul>
-<p>都是提供一种一种方式模拟健全的作用域规则，本质上还是靠程序员自身的代码规则约束，没有在根本上解决问题</p>
-<p>2.webpack的出现</p>
-<p>一切皆模块，将css也是作为模块处理</p>
-<p>通过css-loader—local-scope实现的：</p>
-<p>webpack配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">loaders: [</span><br><span class="line">  ...</span><br><span class="line">  &#123;</span><br><span class="line">    test: /\.css$/,</span><br><span class="line">    loader: &apos;css?localIdentName=[name]__[local]___[hash:base64:5]&apos;</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-<p>使用方式：</p>
-<p>引入：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import styles from &apos;./MyComponent.css&apos;;</span><br></pre></td></tr></table></figure>
-<p>css文件：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">:local(.foo)&#123;</span><br><span class="line">    color: red;</span><br><span class="line">&#125;</span><br><span class="line">:local(.bar)&#123;</span><br><span class="line">    color:blue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>编译成：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.MyComponent__foo___1rJwx &#123; … &#125;</span><br></pre></td></tr></table></figure>
-<p>很明显，<code>:local</code> 表示在局部作用域中使用的类名</p>
-<p>在使用css的地方这样写：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import styles from &apos;./MyComponent.css&apos;;</span><br><span class="line">import React, &#123; Component &#125; from &apos;react&apos;;</span><br><span class="line">export default class MyComponent extends Component &#123;</span><br><span class="line">  render() &#123;</span><br><span class="line">    return (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;div className=&#123;styles.foo&#125;&gt;Foo&lt;/div&gt;</span><br><span class="line">        &lt;div className=&#123;styles.bar&#125;&gt;Bar&lt;/div&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这样：不用在所有的类名添加冗长的前缀来模拟范围，多个组件可以自定义自己的foo和bar标识符，可以大胆修改我们的CSS，不用小心翼翼地怕影响其他页面的元素</p>
-<p>重大的突破：</p>
-<blockquote>
-<p>编写可维护的CSS现在是值得提倡的，但不是通过谨慎地准守一个命名约定，而是在开发过程中通过独立的封装</p>
-</blockquote>
-<p>这样也会引发一个问题：</p>
-<p>如果大部分的css都需要是全局的，特殊的部分比较少？</p>
-<p>引入局部作用域对我们处理CSS有重大的的连锁反应。命名规范，重用模式，潜在的样式抽离，分包等等，都会直接受到这种转变的影响</p>
-<p>最终发展为：</p>
-<p>在css-loader上通过一个module的标志可以支持CSS Modules</p>
-<p>那么webpack官网上讲解的写法：</p>
-<p>modules—启用css模块规范</p>
-<p>关于写法：</p>
-<ul>
-<li>如果使用webpack中的modules的配置的话，默认就是scoped的local范围，即在本组件中使用</li>
-<li>如果需要使用全局的，可以在样式后面跟相应的全局样式，如：</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">:global(.title1) &#123;</span><br><span class="line">  color: green;</span><br><span class="line">&#125;</span><br><span class="line">.title .subTitle :global(.title1)  &#123; color: blue; &#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>我一直在想的嵌套的<code>lcoal</code>写法应该怎么写，发现不能使用</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">:local(.title .subTitle)&#123;</span><br><span class="line">    color: blue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>会出现警告，这不是正确的写法，但还是会渲染出来</p>
-<ul>
-<li>官方给出的</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">:local(.className) &#123; background: red; &#125;</span><br><span class="line">:local .className &#123; color: green; &#125;</span><br><span class="line">:local(.className .subClass) &#123; color: green; &#125;</span><br><span class="line">:local .className .subClass :global(.global-class-name) &#123; color: blue; &#125;</span><br></pre></td></tr></table></figure>
-<p>一开始不理解，但重要的使其原理，</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    loader: &quot;css-loader&quot;,</span><br><span class="line">    options: &#123;</span><br><span class="line">        modules: true,</span><br><span class="line">        localIdentName: &apos;[path][name]__[local]--[hash:base64:5]&apos;,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>然后渲染出来的类名</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">src-App__subTitle--NDKro</span><br><span class="line">src: 上层文件夹名称</span><br><span class="line">App: 文件名</span><br><span class="line">subTitle: 类名</span><br><span class="line">NDKro：哈希值</span><br></pre></td></tr></table></figure>
-<p>每当写一个类的时候，类似这样</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:local(.className) &#123; background: red; &#125; == .className &#123; background: red; &#125;</span><br></pre></td></tr></table></figure>
-<p>默认就是 local ，webpack会为其添加前述的完成名称</p>
-<p>但如果写的是</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:global(.className) &#123; background: red; &#125;</span><br></pre></td></tr></table></figure>
-<p>渲染在页面上只是保留原有的名称，<code>.className</code> </p>
-<p>所以解析一下这句代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:local .className .subClass :global(.global-class-name) &#123; color: blue; &#125;</span><br></pre></td></tr></table></figure>
-<p>使用局部作用域中的 .className, .subClass，这里真实的class 是自动化生成的复杂的class</p>
-<p>而加了global的 则是使用原本声明的类名即简单的类名</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">:local(.title)&#123;</span><br><span class="line">  color: red;</span><br><span class="line">&#125;</span><br><span class="line">:global(.title)&#123;</span><br><span class="line">  color: bisque;</span><br><span class="line">&#125;</span><br><span class="line">:local .title .subTitle .title1 &#123; color: blue; &#125;</span><br></pre></td></tr></table></figure>
-<p>一般写法是这样：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;span className=&#123; styles.title &#125;&gt;&lt;/span&gt;</span><br><span class="line">&lt;span className=&quot;title&quot;&gt;&lt;/span&gt;</span><br></pre></td></tr></table></figure>
-<p>上面的解析就是： 找到局部的 title， 下面的局部的subTitle， 下面的局部的title1，将相应的元素的样式设置成blue</p>
-<p>但是如果是 上面写样式的第二种写法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;span className=&quot;title&quot;&gt;&lt;/span&gt;</span><br></pre></td></tr></table></figure>
-<p>就直接使用的全局的样式</p>
-<p>样式声明是这样</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">:local .title .subTitle :global(.title1) &#123; color: blue; &#125;</span><br></pre></td></tr></table></figure>
-<p>上面的解析就是： 找到局部的 title， 下面的局部的subTitle， 下面的全局的title1类，将相应的元素的样式设置成blue</p>
-<p><strong>其实，更合理的写法，不应该将全局和局部的样式写在一起，应该全局一个文件，局部一个文件，分别引入这样更合理一些，在局部样式种夹杂更多的全局样式，会比较混乱。</strong></p>
-
-          
+<p>都是提供一种一种方式模拟健全的作用域规则，本质上还是靠程序员自身的代码规则约束，没有在根本上解决问题。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/08/20/现代样式：css也要模块化/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
