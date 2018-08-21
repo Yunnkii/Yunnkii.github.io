@@ -82,14 +82,14 @@
 <meta name="description" content="问题起源： css的全局特性：css 全部作为全局样式的形式，容易造成命名冲突  ####css 模块化的概念： css 应该时有它的作用域的，即： 发展的过程1.在全局作用域问题上，早期的做法：  OOCSS BEM  都是提供一种一种方式模拟健全的作用域规则，本质上还是靠程序员自身的代码规则约束，没有在根本上解决问题。">
 <meta name="keywords" content="css">
 <meta property="og:type" content="article">
-<meta property="og:title" content="现代样式：css也要模块化">
+<meta property="og:title" content="现代样式：CSS Modules">
 <meta property="og:url" content="http://yoursite.com/2018/08/20/现代样式：css也要模块化/index.html">
 <meta property="og:site_name" content="Gaomy&#39;s blog">
 <meta property="og:description" content="问题起源： css的全局特性：css 全部作为全局样式的形式，容易造成命名冲突  ####css 模块化的概念： css 应该时有它的作用域的，即： 发展的过程1.在全局作用域问题上，早期的做法：  OOCSS BEM  都是提供一种一种方式模拟健全的作用域规则，本质上还是靠程序员自身的代码规则约束，没有在根本上解决问题。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-20T12:31:12.797Z">
+<meta property="og:updated_time" content="2018-08-20T12:51:31.063Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="现代样式：css也要模块化">
+<meta name="twitter:title" content="现代样式：CSS Modules">
 <meta name="twitter:description" content="问题起源： css的全局特性：css 全部作为全局样式的形式，容易造成命名冲突  ####css 模块化的概念： css 应该时有它的作用域的，即： 发展的过程1.在全局作用域问题上，早期的做法：  OOCSS BEM  都是提供一种一种方式模拟健全的作用域规则，本质上还是靠程序员自身的代码规则约束，没有在根本上解决问题。">
 
 
@@ -126,7 +126,7 @@
 
 
 
-  <title>现代样式：css也要模块化 | Gaomy's blog</title>
+  <title>现代样式：CSS Modules | Gaomy's blog</title>
   
 
 
@@ -250,7 +250,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">现代样式：css也要模块化</h1>
+          <h1 class="post-title" itemprop="name headline">现代样式：CSS Modules</h1>
         
 
         <div class="post-meta">
@@ -376,6 +376,17 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;span className=&quot;title&quot;&gt;&lt;/span&gt;</span><br></pre></td></tr></table></figure>
 <p>意思是直接使用的全局的样式</p>
 <p><strong>其实，我觉得，更合理的写法，不应该将全局和局部的样式写在一起，应该全局一个文件，局部一个文件，分别引入这样更合理一些，在局部样式种夹杂更多的全局样式，会比较混乱。</strong></p>
+<p>css module 里的嵌套</p>
+<p>使用<code>composes</code> 下面的例子是官网上的：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">:local(.continueButton) &#123;</span><br><span class="line">  composes: button from &apos;library/button.css&apos;;</span><br><span class="line">  background: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">:local(.nameEdit) &#123;</span><br><span class="line">  composes: edit highlight from &apos;./edit.css&apos;;</span><br><span class="line">  background: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>引入多个：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">:local(.className) &#123;</span><br><span class="line">  composes: edit hightlight from &apos;./edit.css&apos;;</span><br><span class="line">  composes: button from &apos;module/button.css&apos;;</span><br><span class="line">  composes: classFromThisModule;</span><br><span class="line">  background: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><a href="https://zhuanlan.zhihu.com/p/23571898" target="_blank" rel="noopener">css  Modules</a></p>
+<p><a href="https://my.oschina.net/fzxgg/blog/607398" target="_blank" rel="noopener">在React中的实践</a></p>
+<p><a href="https://my.oschina.net/fzxgg/blog/607398" target="_blank" rel="noopener">BEM</a></p>
+<p><a href="http://nec.netease.com/standard/css-name.html" target="_blank" rel="noopener">网易css 命名规范</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/28876652" target="_blank" rel="noopener">使用 styled-components 加速 React 开发</a></p>
 
       
     </div>
@@ -415,6 +426,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/21/学习TypeScript-基础/" rel="prev" title="学习TypeScript-基础">
+                学习TypeScript-基础 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -495,7 +510,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
