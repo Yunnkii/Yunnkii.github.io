@@ -232,6 +232,278 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/03/HTTPS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Gaomy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/assets/img/pic.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gaomy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/03/HTTPS/" itemprop="url">HTTPS</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-03T18:40:59+08:00">
+                2018-08-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h4 id="什么是HTTPS"><a href="#什么是HTTPS" class="headerlink" title="什么是HTTPS"></a>什么是HTTPS</h4><p>超文本传输协议安全（HTTPS）是HTTP的安全版本，HTTP是在浏览器和您连接的网站之间发送数据的协议。HTTPS末尾的“S”代表“安全”。这意味着您的浏览器和网站之间的所有通信都是加密的。</p>
+<p>HTTPS通常用于保护高度机密的在线交易，如网上银行和在线购物订单。</p>
+<p>受保护的信息包括<strong>Cookie，用户代理详细信息，URL路径，表单提交和查询字符串参数</strong>。HTTPS旨在防止在传输过程中读取或更改此信息</p>
+<p>Internet Explorer，Firefox和Chrome等Web浏览器也会在地址栏中显示挂锁图标，以直观地指示HTTPS连接有效。</p>
+<h4 id="HTTPS如何工作"><a href="#HTTPS如何工作" class="headerlink" title="HTTPS如何工作"></a>HTTPS如何工作</h4><p>HTTPS页面通常使用两种安全协议之一来加密通信 - <a href="https://www.instantssl.com/ssl.html" target="_blank" rel="noopener">SSL（安全套接字层）</a>或TLS（传输层安全性）。TLS和SSL协议都使用所谓的“非对称”公钥基础结构（PKI）系统。非对称系统使用两个“密钥”来加密通信，一个“公共”密钥和一个“私有”密钥。使用公钥加密的任何内容只能通过私钥解密，反之亦然。</p>
+<p>“私人”密钥应该受到严格保护，并且只能由私钥的所有者访问。对于网站，私钥仍然安全地存放在Web服务器上。相反，公钥旨在分发给任何需要能够解密用私钥加密的信息的人和每个人。</p>
+<h4 id="什么是-SSL证书"><a href="#什么是-SSL证书" class="headerlink" title="什么是 SSL证书"></a>什么是 SSL证书</h4><p>当您请求与网页建立HTTPS连接时，网站最初会将其SSL证书发送到您的浏览器。此证书包含开始安全会话所需的公钥。根据此初始交换，您的浏览器和网站然后启动“SSL握手”。SSL握手涉及生成共享机密以在您自己和网站之间建立唯一安全的连接。</p>
+<p>证书颁发机构<a href="https://https.cio.gov/#footnote-2" target="_blank" rel="noopener">[2]</a>可以代表Web服务所有者颁发加密签名证书。这些证书向客户端传达Web服务主机在证书颁发时向证书颁发机构证明域的所有权。这可以防止未知或不受信任的网站伪装成联邦网站或服务。</p>
+<h4 id="为什么需要证书"><a href="#为什么需要证书" class="headerlink" title="为什么需要证书"></a>为什么需要证书</h4><p>通过常规HTTP连接发送的所有通信都是<strong>“纯文本”</strong>，任何黑客都可以读取，这些黑客会破坏浏览器和网站之间的连接。如果“通信”在订单上并且包含您的信用卡详细信息或社会安全号码，则存在明显的危险。通过HTTPS连接，所有通信都是安全加密的。这意味着即使有人设法闯入连接，他们也无法解密您和网站之间传递的任何数据。</p>
+<h4 id="HTTPS-证书的好处"><a href="#HTTPS-证书的好处" class="headerlink" title="HTTPS 证书的好处"></a>HTTPS 证书的好处</h4><p>通过常规HTTP连接发送的所有通信都是“纯文本”，任何黑客都可以读取，这些黑客会破坏浏览器和网站之间的连接。如果“通信”在订单上并且包含您的信用卡详细信息或社会安全号码，则存在明显的危险。通过HTTPS连接，所有通信都是安全加密的。这意味着即使有人设法闯入连接，他们也无法解密您和网站之间传递的任何数据。</p>
+<h4 id="HTTPS-不做什么"><a href="#HTTPS-不做什么" class="headerlink" title="HTTPS 不做什么"></a>HTTPS 不做什么</h4><p>HTTPS有几个重要的限制。通信期间<strong>未加密IP地址和目标域名</strong>。即使是加密的流量也可以间接地泄露某些信息，例如在网站上花费的时间，或者请求的资源或提交的信息的大小。</p>
+<p>HTTPS仅保证两个系统之间连接的完整性，而不是系统本身。它的目的不是保护Web服务器不被黑客入侵或泄露，或者防止Web服务在正常操作期间暴露用户信息。同样，如果攻击者破坏了用户的系统，则可以更改该系统，以使其未来的HTTPS连接受到攻击者的控制。HTTPS的保证也可能被受损或恶意的证书颁发机构削弱或消除</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/01/TypeScript实践-错误处理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Gaomy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/assets/img/pic.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gaomy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/01/TypeScript实践-错误处理/" itemprop="url">TypeScript实践-错误处理</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-01T15:41:00+08:00">
+                2018-08-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>1、错误 “import sources within a group must be alphabetized”</p>
+<p>是说 引入资源，应该有顺序</p>
+<p>需要使用 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">import * as source1 from &apos;../../../A&apos;</span><br><span class="line">import * as source2 from &apos;../../../B&apos;</span><br><span class="line">import * as source1 from &apos;../../C&apos;</span><br><span class="line">import * as source1 from &apos;../../D&apos;</span><br></pre></td></tr></table></figure>
+<p>报错的时候会有提示比如： 【4，1】</p>
+<p>会有一个行提示，在比如上面的4，第四行打上空格试试</p>
+<p>2、对于使用 injectIntl函数导致的 实参与形参 类型不一致的问题</p>
+<p>报错：</p>
+<p>Argument of type  xx is not assignable to xx   &lt;Iprops&amp; InjectIntlProps&gt;</p>
+<p>对于 在injetIntl()函数中的参数问题，阅读文档之后，发现其需要传入的是一个 ReactClass 类型，但是此时的HomePage 是一个ReactClass ,只是在定义这个类的时候对Props,States使用了接口声明类型，不明白到底是因为什么导致了这个错误</p>
+<p>使用了 对HomePage 不进行类型检查的方式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">InjectIntl(HomePage as any)</span><br></pre></td></tr></table></figure>
+<p>在查找的过程中了解到一个泛型的概念也会导致这种错误</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">declare function decorate &lt;T&gt;() (component: T) =&gt; T</span><br><span class="line">class Foo&#123;</span><br><span class="line">    derp () &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用 decorate函数的错误方式</p>
+<p>decorate<foo>() (Foo)</foo></p>
+<p>正确的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">decorate&lt;typeof Foo&gt; ()(Foo)</span><br><span class="line">decorate&lt;Foo&gt; () (new Foo)</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/08/01/TypeScript实践-错误处理/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/07/31/HTTP协议状态码/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1007,303 +1279,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/09/前端安全/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Gaomy">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/assets/img/pic.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gaomy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/09/前端安全/" itemprop="url">前端安全</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-09T09:21:12+08:00">
-                2018-03-09
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/前端安全/" itemprop="url" rel="index">
-                    <span itemprop="name">前端安全</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>关于前端安全问题的总结。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/09/前端安全/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/08/HTTP缓存/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Gaomy">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/assets/img/pic.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Gaomy's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/08/HTTP缓存/" itemprop="url">HTTP缓存</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-08T17:17:08+08:00">
-                2018-03-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/HTTP/" itemprop="url" rel="index">
-                    <span itemprop="name">HTTP</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>从问题：200（from cache）和304  有什么区别来看浏览器缓存。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/08/HTTP缓存/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1353,7 +1333,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1375,7 +1355,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

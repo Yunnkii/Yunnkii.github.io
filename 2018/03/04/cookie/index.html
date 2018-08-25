@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Gaomy&#39;s blog">
 <meta property="og:description" content="关于cookie的总结。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-06T05:46:51.549Z">
+<meta property="og:updated_time" content="2018-08-24T08:22:38.784Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="cookie">
 <meta name="twitter:description" content="关于cookie的总结。">
@@ -324,11 +324,40 @@
       
         <p> 关于cookie的总结。</p>
 <a id="more"></a>
-<h4 id="cookie的作用—管理状态"><a href="#cookie的作用—管理状态" class="headerlink" title="cookie的作用—管理状态"></a>cookie的作用—管理状态</h4><p>http 是无状态协议，不会记住用户的登陆状态，服务器指示在浏览器上存储用户的信息，以保证用户再次访问时能够识别，提高访问效率。cookie 是小型纯文本文件。</p>
-<h4 id="cookie的原理"><a href="#cookie的原理" class="headerlink" title="cookie的原理"></a>cookie的原理</h4><p><code>Cookie</code>定义了一些HTTP请求头和HTTP响应头，通过这些HTTP头信息使服务器可以与客户进行状态交互。</p>
+<h4 id="cookie"><a href="#cookie" class="headerlink" title="cookie"></a>cookie</h4><h5 id="cookie的作用—管理状态"><a href="#cookie的作用—管理状态" class="headerlink" title="cookie的作用—管理状态"></a>cookie的作用—管理状态</h5><p>http 是无状态协议，不会记住用户的登陆状态，服务器指示在浏览器上存储用户的信息，以保证用户再次访问时能够识别，提高访问效率。cookie 是小型纯文本文件。</p>
+<h5 id="cookie的原理"><a href="#cookie的原理" class="headerlink" title="cookie的原理"></a>cookie的原理</h5><p><code>Cookie</code>定义了一些HTTP请求头和HTTP响应头，通过这些HTTP头信息使服务器可以与客户进行状态交互。</p>
 <p>客户端请求服务器后，如果服务器需要记录用户状态，服务器会在响应信息中包含一个<code>Set-Cookie</code>的响应头，客户端会根据这个响应头存储<code>Cookie</code>信息。再次请求服务器时，客户端会在请求信息中包含一个<code>Cookie</code>请求头，而服务器会根据这个请求头进行用户身份、状态等较验。</p>
-<h4 id="cookie-的特色"><a href="#cookie-的特色" class="headerlink" title="cookie 的特色"></a>cookie 的特色</h4><p>1、作用域</p>
-<p>2、路径（在domain选项验证后才能比较）</p>
+<h5 id="cookie分类"><a href="#cookie分类" class="headerlink" title="cookie分类"></a>cookie分类</h5><ul>
+<li>会话cookie</li>
+<li>持久性cookie</li>
+</ul>
+<h5 id="cookie-的特点"><a href="#cookie-的特点" class="headerlink" title="cookie 的特点"></a>cookie 的特点</h5><p>1、范围</p>
+<ul>
+<li>Domain</li>
+</ul>
+<p>允许哪些主机接收cookie,</p>
+<p>未指定 -&gt; 当前文档所在的位置，不包含子域</p>
+<p>指定 -&gt; 子域总包含在内</p>
+<p>如果<code>Domain=mozilla.org</code>设置了，那么cookie就会包含在子域中<code>developer.mozilla.org</code></p>
+<p><code>Path</code>表示请求的URL中必须存在的URL路径才能发送<code>Cookie</code>标头。％x2F（“/”）字符被视为目录分隔符，子目录也将匹配。</p>
+<ul>
+<li>Path(在domain选项验证后才能比较)</li>
+</ul>
+<p>例如，如果<code>Path=/docs</code>设置，则这些路径将匹配：</p>
+<ul>
+<li><ul>
+<li>z<code>/docs</code></li>
+</ul>
+</li>
+<li><ul>
+<li><code>/docs/Web/</code></li>
+</ul>
+</li>
+<li><ul>
+<li><code>/docs/Web/HTTP</code></li>
+</ul>
+</li>
+</ul>
 <p>3、安全（secure https）</p>
 <p>4、cookie 限制</p>
 <ul>
@@ -337,7 +366,7 @@
 </ul>
 <p>5、解析cookie (YUICookie应用程序）使用javscript操作cookie</p>
 <p>6、HttpOnly(一种安全措施，可帮助防止通过JavaScript窃取cookie)</p>
-<h4 id="cookie和-安全"><a href="#cookie和-安全" class="headerlink" title="cookie和 安全"></a>cookie和 安全</h4><p>会话劫持</p>
+<h5 id="cookie和-安全"><a href="#cookie和-安全" class="headerlink" title="cookie和 安全"></a>cookie和 安全</h5><p>会话劫持</p>
 <ul>
 <li>仅通过ssl 发送cookie(SSL在通过Internet传输之前在浏览器上加密请求，因此单独的数据包嗅探不能用于识别cookie值)</li>
 <li>以某种随机方式和/或基于用户信息（用户名，IP地址，登录时间等）的方式生成会话密钥</li>
@@ -358,6 +387,40 @@
 <li>在敏感数据系统中验证用户的Cookies应该具有较短的到期时间。在某些情况下，可能需要几分钟的过期期限。</li>
 <li>要求验证不仅仅与cookie，还要通过引用和/或请求类型（POST而不是GET）进行验证。</li>
 </ul>
+<h5 id="cookie应用场景"><a href="#cookie应用场景" class="headerlink" title="cookie应用场景"></a>cookie应用场景</h5><ul>
+<li>记住用户的安全搜索偏好设置</li>
+<li>看到的广告与用户更相关，</li>
+<li>计算网页访问者数量，帮助用户注册网站服务，</li>
+<li>保护用户的数据或记住用户的广告设置</li>
+</ul>
+<h4 id="google使用的cookie类型"><a href="#google使用的cookie类型" class="headerlink" title="google使用的cookie类型"></a>google使用的cookie类型</h4><ol>
+<li><p>Preferences（偏好）</p>
+<p>允许网站记住改变网站行为的或者外观的信（字体大小）息例如：</p>
+<p>首选语言、所在地区，它可以用这些信息来推送一些天气预报或者新闻</p>
+<p>NID—偏好设置的cookie,包含一个ID google用其记住用户的偏好信息（每页显示的搜索结果、希望打开的安全搜索过滤器）</p>
+</li>
+<li><p>Security（安全）</p>
+</li>
+</ol>
+<p>验证用户身份，使用SID和HSID的cookie包含用户的账户ID，最近登陆的时间的数字签名和加密记录，这两个cookie的组合可以允许google阻止很多类型的攻击，例如：试图窃取您在网页上完成的表单内容。</p>
+<p>3.processes(进程)</p>
+<p>进程cookie有助于使网站工作并提供网站访问者期望的服务，例如浏览网页或访问网站的安全区域。如果没有这些cookie，网站将无法正常运行</p>
+<p>例如，我们使用名为“lbcs”的Cookie，这使得Google文档可以在一个浏览器中打开多个文档。阻止此Cookie会阻止Google文档正常运行。</p>
+<p>4、ADS(广告)</p>
+<p>使用Cookie来使广告对用户更具吸引力，对发布商和广告客户更有价值。</p>
+<p>Cookie的一些常见应用是根据与用户相关的内容选择广告; 改进有关广告系列效果的报告，并避免展示用户已经看过的广告。</p>
+<p>Google使用NID和SID等Cookie来帮助自定义Google媒体资源上的广告，例如Google搜索。例如，我们使用此类Cookie来记住您最近的搜索，您之前与广告客户的广告或搜索结果的互动以及您对广告客户网站的访问。这有助于我们向您展示Google上的自定义广告。</p>
+<p>我们还使用一个或多个Cookie来宣传我们在网络上投放的广告。非Google网站上的主要广告Cookie之一被命名为“IDE”，并存储在域doubleclick.net下的浏览器中。另一个存储在google.com中，称为ANID。我们使用其他Cookie，其名称包括DSID，FLC，AID，TAID和exchange_uid。其他Google媒体资源（如YouTube）也可能会使用这些Cookie向您显示更相关的广告。</p>
+<p>有时，广告Cookie可能会在您访问的网站的域中设置。对于我们在网络上投放广告的情况，可以在您访问的网站的域中设置名为“<strong>gads”或“</strong>gac”的Cookie。与在Google自己的域中设置的Cookie不同，当您使用的网站不在其设置的网站上时，Google无法读取这些Cookie。它们用于衡量与该域上广告的互动以及防止向您展示相同广告的次数。</p>
+<p>Google还使用转化Cookie，其主要目的是帮助广告客户确定点击其广告的用户最终购买其产品的次数。这些Cookie允许Google和广告客户确定您点击了该广告，然后访问了该广告客户网站。Google不会将转化Cookie用于个性化广告定位，并且仅在有限时间内保留。名为“转化”的Cookie专门用于此目的。它通常设置在googleadservices.com域或google.com域中（您可以在此页面底部找到我们用于广告Cookie的域列表）。我们的一些其他Cookie也可用于衡量转化事件。例如，DoubleClick和Google Analytics Cookie也可用于此目的。</p>
+<p>我们还使用名为“AID”，“DSID”和“TAID”的Cookie，如果您之前已在其他设备上登录了Google帐户，则会将这些Cookie用于在各设备之间关联您的活动。我们这样做是为了协调您在设备上看到的广告并衡量转化事件。这些Cookie可以在域名google.com/ads,google.com/ads/measurement或googleadservices.com上设置。如果您不希望所看到的广告在您的设备上进行协调，则可以使用“ <a href="https://www.google.com/settings/ads?hl=en_GB" target="_blank" rel="noopener">广告设置”</a>选择停用广告个性化</p>
+<p>5、session state（会话状态）</p>
+<p>网站通常会收集有关用户如何与网站互动的信息,这可能包括用户最常访问的页面以及用户是否从某些页面获取错误消息。我们使用这些所谓的“会话状态cookie”来帮助我们改进服务，以改善用户的浏览体验。阻止或删除这些cookie不会使网站无法使用。</p>
+<p>这些cookie还可用于匿名衡量PPC（每次点击付费）和联盟广告的有效性。</p>
+<p>例如，我们使用名为“recent_watched_video_id_list”的Cookie，以便YouTube可以记录特定浏览器最近观看的视频。</p>
+<p>6、Analytics（分析）</p>
+<p>Google Analytics（分析）是Google的分析工具，可帮助网站和应用所有者了解访问者如何与其媒体资源互动。它可能会使用一组Cookie来收集信息并报告网站使用情况统计信息，而无需亲自识别Google的个人访问者。Google Analytics使用的主要Cookie是“__ga”Cookie。</p>
+<p>除了报告网站使用情况统计信息之外，还可以使用Google Analytics以及上述一些广告Cookie来帮助在Google媒体资源（如Google搜索）和整个网络上展示更相关的广告，并衡量与广告的互动情况我们表明。第一方cookie和第三方cookie</p>
 <h4 id="session"><a href="#session" class="headerlink" title="session"></a>session</h4><blockquote>
 <p>session机制是一种服务器端的机制，服务器使用一种类似于散列表的结构（也可能就是使用散列表）来保存信息。</p>
 </blockquote>
@@ -365,6 +428,7 @@
 <p>当你访问一个使用session 的站点，同时在自己机子上建立一个cookie，建议在服务器端的session机制更安全些，因为它不会任意读取客户存储的信息。</p>
 <p>session id的值应该是一个既不会重复，又不容易被找到规律以仿造的字符串，这个session id将被在本次响应中返回给客户端保存。</p>
 <p>保存这个session id的方式可以采用cookie，这样在交互过程中浏览器可以自动的按照规则把这个标识发挥给服务器。一般这个cookie的名字都是类似于SEEESIONID。但cookie可以被人为的禁止，则必须有其他机制以便在cookie被禁止时仍然能够把session id传递回服务器。</p>
+<p>跟踪和隐私</p>
 <h4 id="cookie-与session区别"><a href="#cookie-与session区别" class="headerlink" title="cookie 与session区别"></a>cookie 与session区别</h4><p>1、存取方式的不同</p>
 <p>Cookie中只能保管ASCII字符串，假如需求存取Unicode字符或者二进制数据，需求先进行编码。Cookie中也不能直接存取Java对象。若要存储略微复杂的信息，运用Cookie是比拟艰难的。</p>
 <p>Session中能够存取任何类型的数据，包括而不限于String、Integer、List、Map等。Session中也能够直接保管Java Bean乃至任何Java类，对象等，运用起来十分便当。能够把Session看做是一个Java容器类</p>
@@ -507,7 +571,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -529,7 +593,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -562,7 +626,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#cookie的作用—管理状态"><span class="nav-number">1.</span> <span class="nav-text">cookie的作用—管理状态</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cookie的原理"><span class="nav-number">2.</span> <span class="nav-text">cookie的原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cookie-的特色"><span class="nav-number">3.</span> <span class="nav-text">cookie 的特色</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cookie和-安全"><span class="nav-number">4.</span> <span class="nav-text">cookie和 安全</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#session"><span class="nav-number">5.</span> <span class="nav-text">session</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cookie-与session区别"><span class="nav-number">6.</span> <span class="nav-text">cookie 与session区别</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#cookie"><span class="nav-number">1.</span> <span class="nav-text">cookie</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#cookie的作用—管理状态"><span class="nav-number">1.1.</span> <span class="nav-text">cookie的作用—管理状态</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#cookie的原理"><span class="nav-number">1.2.</span> <span class="nav-text">cookie的原理</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#cookie分类"><span class="nav-number">1.3.</span> <span class="nav-text">cookie分类</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#cookie-的特点"><span class="nav-number">1.4.</span> <span class="nav-text">cookie 的特点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#cookie和-安全"><span class="nav-number">1.5.</span> <span class="nav-text">cookie和 安全</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#cookie应用场景"><span class="nav-number">1.6.</span> <span class="nav-text">cookie应用场景</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#google使用的cookie类型"><span class="nav-number">2.</span> <span class="nav-text">google使用的cookie类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#session"><span class="nav-number">3.</span> <span class="nav-text">session</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cookie-与session区别"><span class="nav-number">4.</span> <span class="nav-text">cookie 与session区别</span></a></li></ol></div>
             
 
           </div>

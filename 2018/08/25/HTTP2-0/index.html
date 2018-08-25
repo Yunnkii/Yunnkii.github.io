@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Http," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="介绍在与 HTTP/1.1 完全语义兼容的基础上，进一步减少了网络延迟，大幅度的提升了 web 性能。 特性1.多路复用（Multiplexing）以下描述我认为相当准确">
+<meta name="keywords" content="Http">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTP2.0">
+<meta property="og:url" content="http://yoursite.com/2018/08/25/HTTP2-0/index.html">
+<meta property="og:site_name" content="Gaomy&#39;s blog">
+<meta property="og:description" content="介绍在与 HTTP/1.1 完全语义兼容的基础上，进一步减少了网络延迟，大幅度的提升了 web 性能。 特性1.多路复用（Multiplexing）以下描述我认为相当准确">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://pic2.zhimg.com/80/b1e608ddb7493608efea3e76912aabe1_hd.png">
+<meta property="og:image" content="https://pic4.zhimg.com/80/906e22193e61cd561325d93aae0f1e07_hd.jpg">
+<meta property="og:image" content="https://pic2.zhimg.com/80/ae5418b7da1c6593fd6addad0310faa5_hd.png">
+<meta property="og:image" content="http://c.hiphotos.baidu.com/baike/s%3D220/sign=71798a12d262853596e0d523a0ee76f2/fc1f4134970a304ecf36501ad6c8a786c9175c3e.jpg">
+<meta property="og:image" content="http://g.hiphotos.baidu.com/baike/s%3D250/sign=57bf76cbb751f819f525044feab54a76/42166d224f4a20a4288ecc2797529822730ed0ba.jpg">
+<meta property="og:image" content="https://pic2.zhimg.com/80/ae5418b7da1c6593fd6addad0310faa5_hd.png">
+<meta property="og:image" content="https://pic2.zhimg.com/80/c41c386f03b41f149a53fb17f520dd8d_hd.png">
+<meta property="og:image" content="https://pic1.zhimg.com/80/d9f07162d5391641b7a2645a61b24fc0_hd.png">
+<meta property="og:image" content="https://pic2.zhimg.com/80/9a238eee5cef89192b6afe360166dd41_hd.png">
+<meta property="og:image" content="https://pic3.zhimg.com/80/220e5f58c712ae45e629fe9e811257ba_hd.png">
+<meta property="og:image" content="https://pic3.zhimg.com/050682be95718c8c72b2ed0b580701ba_r.jpg">
+<meta property="og:image" content="https://pic2.zhimg.com/80/cfb2f2fc8f2e2251085f205eb7b6bb01_hd.png">
+<meta property="og:image" content="https://pic4.zhimg.com/80/f5ee2ff45dc42b770ede800ab893bb5b_hd.png">
+<meta property="og:updated_time" content="2018-08-25T11:55:38.456Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HTTP2.0">
+<meta name="twitter:description" content="介绍在与 HTTP/1.1 完全语义兼容的基础上，进一步减少了网络延迟，大幅度的提升了 web 性能。 特性1.多路复用（Multiplexing）以下描述我认为相当准确">
+<meta name="twitter:image" content="https://pic2.zhimg.com/80/b1e608ddb7493608efea3e76912aabe1_hd.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/08/25/HTTP2-0/"/>
+
+
+
+
+
+  <title>HTTP2.0 | Gaomy's blog</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Gaomy's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">前端</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/25/HTTP2-0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Gaomy">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/assets/img/pic.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Gaomy's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">HTTP2.0</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-25T15:30:25+08:00">
+                2018-08-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>在与 HTTP/1.1 完全语义兼容的基础上，进一步减少了网络延迟，大幅度的提升了 web 性能。</p>
+<h4 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h4><h5 id="1-多路复用（Multiplexing）"><a href="#1-多路复用（Multiplexing）" class="headerlink" title="1.多路复用（Multiplexing）"></a>1.多路复用（Multiplexing）</h5><p>以下描述我认为相当准确</p>
+<a id="more"></a>
+<p><strong>允许同时通过单一的 HTTP/2 连接发起多重的请求-响应消息。</strong></p>
+<p>简而言之：</p>
+<p>HTTP/2 通信都在一个连接上完成，这个连接可以承载任意数量的双向数据流</p>
+<p><img src="https://pic2.zhimg.com/80/b1e608ddb7493608efea3e76912aabe1_hd.png" alt="img"></p>
+<h6 id="HTTP-1-x之前是："><a href="#HTTP-1-x之前是：" class="headerlink" title="HTTP 1.x之前是："></a>HTTP 1.x之前是：</h6><h6 id="更详细的描述多路复用："><a href="#更详细的描述多路复用：" class="headerlink" title="更详细的描述多路复用："></a>更详细的描述多路复用：</h6><h5 id="2-二进制分帧"><a href="#2-二进制分帧" class="headerlink" title="2.二进制分帧"></a>2.二进制分帧</h5><p>【突破 HTTP1.1 的性能限制，改进传输性能，实现低延迟和高吞吐量】 关键之一是在应用层（HTTP/2）和传输层(TCP or UDP)之间增加一个二进制分帧层。</p>
+<p><img src="https://pic4.zhimg.com/80/906e22193e61cd561325d93aae0f1e07_hd.jpg" alt="img"></p>
+<p>二进制分帧层将所有的传输消息分为更小的消息和帧（frame），并对他们采用二进制格式的编码，其中HTTP1.x中的受不信息会被封装到HEADER frame 中相对的Request body被封装到 DATA frame 中 </p>
+<p>通信都在一个连接上完车给，这个连接可以承载任意数量的双向流。</p>
+<p><img src="https://pic2.zhimg.com/80/ae5418b7da1c6593fd6addad0310faa5_hd.png" alt="img"></p>
+<p>实现低延迟的关键是二进制分帧，那么导致低延迟的原因是TCP连接的</p>
+<h6 id="慢启动："><a href="#慢启动：" class="headerlink" title="慢启动："></a>慢启动：</h6><p>刚建立的连接不宜发送大量的数据，会导致路由器缓存空间耗尽，所以选择根据网络中的状况逐步增加每次发送的数量，cwnd(拥塞窗口)动态变化。</p>
+<p>起初 拥塞窗口和接收窗口一样 都是1 ，每收到一个确认，就让拥塞窗口扩大2倍，直至到 门限值（16），然后使用加法增大 每收到1个确认，将拥塞窗口+1，直到网络拥塞</p>
+<h6 id="拥塞避免"><a href="#拥塞避免" class="headerlink" title="拥塞避免"></a>拥塞避免</h6><p>然后，改变门限值为拥塞时候值的一半，拥塞窗口置为1，然后让它再次重复，这时一瞬间会将网络中的数据量大量降低。</p>
+<p>当cwnd&lt;ssthresh时，使用慢开始算法。</p>
+<p>当cwnd&gt;ssthresh时，改用拥塞避免算法。</p>
+<p>拥塞避免算法让拥塞窗口缓慢增长，即每经过一个往返时间RTT就把发送方的拥塞窗口cwnd加1，而不是加倍。这样拥塞窗口按线性规律缓慢增长。</p>
+<p>无论是在慢开始阶段还是在拥塞避免阶段，只要发送方判断网络出现拥塞（其根据就是没有收到确认，虽然没有收到确认可能是其他原因的分组丢失，但是因为</p>
+<p><img src="http://c.hiphotos.baidu.com/baike/s%3D220/sign=71798a12d262853596e0d523a0ee76f2/fc1f4134970a304ecf36501ad6c8a786c9175c3e.jpg" alt="img"></p>
+<p>](<a href="https://baike.baidu.com/pic/%E6%8B%A5%E5%A1%9E%E7%AA%97%E5%8F%A3/4399307/0/fc1f4134970a304ecf36501ad6c8a786c9175c3e?fr=lemma&amp;ct=single" target="_blank" rel="noopener">https://baike.baidu.com/pic/%E6%8B%A5%E5%A1%9E%E7%AA%97%E5%8F%A3/4399307/0/fc1f4134970a304ecf36501ad6c8a786c9175c3e?fr=lemma&amp;ct=single</a>)</p>
+<p>无法判定，所以都当做拥塞来处理），就把慢开始门限设置为出现拥塞时的发送窗口大小的一半。然后把拥塞窗口设置为1，执行慢开始算法。</p>
+<p>另外，还有TCP的</p>
+<h6 id="快速重传"><a href="#快速重传" class="headerlink" title="快速重传"></a>快速重传</h6><p>快重传可以提高网络的吞吐量而快恢复算法相当于拥塞避免算法的后半恢复部分的优化.</p>
+<p>假设以下情况:如果在发送方设置的超时定时器到时间还没有收到确认,那么有一种可能是网络发生堵塞,这种情况下,tcp会将拥塞窗口置为一,新的门限值变为发生阻塞时的一半并且开始执行慢开始算法.当我们使用快重传的时候,要求接收方接收到一个失序的报文段后就立即发出 重复确认,(目的是让对方早知道有报文段没有到达)</p>
+<blockquote>
+<p>假设发送方发送了M1–M4四个分组,接收方收到了M1和M2,以及M4,这些分组.<br>　　现在接收方不能确认M4,因为M3没有收到,此时接收方可以什么都不干,也可以发送对M2的确认,但是</p>
+<p>快重传算法要求这样做:<br>　　接收方应该及时发送对M2的重复确认,这样可以让发送方知道M3并没有被传过来,发送方还会试着发送M5,M6,接收方收到之后,我们会继续发送对M2的确认,这样一共发了好几个对M2的确认,</p>
+<p>按照规定,只要发送方收到三个重复确认,就立即重传对方未收到的报文段M3.这样可以避免阻塞,并且提高我们网络的吞吐量.</p>
+</blockquote>
+<p><img src="http://g.hiphotos.baidu.com/baike/s%3D250/sign=57bf76cbb751f819f525044feab54a76/42166d224f4a20a4288ecc2797529822730ed0ba.jpg" alt="img"></p>
+<h6 id="快速恢复"><a href="#快速恢复" class="headerlink" title="快速恢复"></a>快速恢复</h6><p>当发送方收到三个连续确认时,就执行”乘法减小”算法,把”慢开始门限”减半,注意接下来不会执行慢开始算法.</p>
+<p>由于此时没有发送网络阻塞(要是发生阻塞的话就不会连续收到4个确认),因此此时不执行慢开始算法,并不会将拥塞窗口的值置为1,而是将它置为慢开始门限的一半.然后再实行拥塞避免算法,每次收到确认之后+1.</p>
+<p>快重传配合使用的还有快恢复算法，有以下两个要点:</p>
+<p>①当发送方连续收到三个重复确认时，就执行“乘法减小”算法，把ssthresh门限减半。但是接下去并不执行慢开始算法。</p>
+<p>②考虑到如果网络出现拥塞的话就不会收到好几个重复的确认，所以发送方现在认为网络可能没有出现拥塞。所以此时不执行慢开始算法，而是将cwnd设置为ssthresh的大小，然后执行拥塞避免算法。</p>
+<h6 id="发送方窗口的上限值"><a href="#发送方窗口的上限值" class="headerlink" title="发送方窗口的上限值"></a>发送方窗口的上限值</h6><p>接收方的缓存空间总是有限的。接收方根据自己的接收能力设定了接收窗口rwnd，并把这个窗口值写入TCP首部中的窗口字段，传送给发送方。因此接收窗口又称为通知窗口（advertised window）。因此，从接收方对发送方的流量控制的角度考虑，发送方的发送窗口一定不能超过对方给出的接收窗口值rwnd。</p>
+<p><strong>发送方窗口的上限值=Min [rwnd,cwnd]</strong></p>
+<p>当rwnd&lt;cwnd时，是接收方的接收能力限制发送方窗口的最大值。</p>
+<p>反之，当cwnd&lt;rwnd时，则是网络的拥塞控制发送方窗口的最大值。</p>
+<p>也就是说，rwnd和cwnd中较小的一个控制发送方发送数据的速率</p>
+<p>以上也是TCP为了防止网络拥塞的情况提出的拥塞控制的机制：</p>
+<p>近些年又出现了选择性应答：</p>
+<p>继续二进制分帧：</p>
+<p>HTTP/2让所有数据流共用一个连接，可以更有效的使用TCP连接，</p>
+<ul>
+<li>单连接多资源的方式，减少服务端的连接压力，内存占用比较少。连接吞吐量更大。</li>
+<li>TCP连接的减少使得网络拥塞状况得到改善，慢启动减少，使得丢包和拥塞恢复速度更快。</li>
+</ul>
+<p><img src="https://pic2.zhimg.com/80/ae5418b7da1c6593fd6addad0310faa5_hd.png" alt="img"></p>
+<h5 id="3-首部压缩（Header-Compression）"><a href="#3-首部压缩（Header-Compression）" class="headerlink" title="3.首部压缩（Header Compression）"></a>3.首部压缩（<strong>Header Compression</strong>）</h5><p>移除了请求中的一些啰嗦首部，你可以通过很少的 IP package，承载数十个乃至上百个的请求，更符合最小数据量的理想化原则。</p>
+<p>HTTP 1.1 不支持首部压缩，SPDY和HTTP2.0应运而生，SPDY 使用通用的DEFATE算法，HTTP/2.0使用专门为压缩首部设计的HPACk算法</p>
+<p><img src="https://pic2.zhimg.com/80/c41c386f03b41f149a53fb17f520dd8d_hd.png" alt="img"></p>
+<h5 id="4-服务端推送（Server-push）"><a href="#4-服务端推送（Server-push）" class="headerlink" title="4.服务端推送（Server push）"></a>4.服务端推送（Server push）</h5><p>服务端会向客户端发送 CSS，JavaScript 以及图片文件，而无需通知客户端，服务端知道客户端可能会需要什么。所以它使用 Server Push 发送多个响应给客户端。节省了 Round Trip ，此时就变成了一个<strong>Less chatty</strong> 的协议，同时也充分的利用了网络资源</p>
+<p>在客户端请求之前发送数据，服务端可以</p>
+<ul>
+<li>对客户端的一个请求发送多个响应，对于一个主页发起的请求，服务端会响应主页请求、logo、style样式这些客户端会用到的东西，相当于在一个HTML 文档中集合了所有的资源。</li>
+<li>缓存</li>
+</ul>
+<p><img src="https://pic1.zhimg.com/80/d9f07162d5391641b7a2645a61b24fc0_hd.png" alt="img"></p>
+<p>在同源情况下，不同页面之间可以共享缓存资源</p>
+<p>HTTP 1.1 协议 请求内容</p>
+<p><img src="https://pic2.zhimg.com/80/9a238eee5cef89192b6afe360166dd41_hd.png" alt="img"></p>
+<ul>
+<li>HTTP/1 是繁琐（chatty）的协议需要不断去向服务端请求新的东西，首先是 HTML 然后是 CSS  Javascript 每一次的交换都<strong>增加了往返的延迟</strong></li>
+<li>每次请求都携带了大量的数据，应该尽可能少的发送数据给服务器，Referer、User-Agent 都是啰嗦的首部</li>
+<li>线头阻塞 看似性能提升的 css sprite inline image ,下载的数据往往超过客户端展示的数据</li>
+</ul>
+<h6 id="关键是何时Push"><a href="#关键是何时Push" class="headerlink" title="关键是何时Push"></a>关键是何时Push</h6><p>因为 push 具有<strong>投机性</strong>，会出现 push 过去的东西，浏览器可能不需要</p>
+<p>这种情况下，HTTP/2 允许客户端通过<strong>RESET_STREAM</strong>主动取消 Push ，然而这样的话，原本可以用于更好方向的 Push 就白白的浪费掉数据往返的价值。</p>
+<h6 id="HTTP-2-的server-push-及HTTP-2-的缓存策略"><a href="#HTTP-2-的server-push-及HTTP-2-的缓存策略" class="headerlink" title="HTTP /2 的server push 及HTTP/2 的缓存策略"></a>HTTP /2 的server push 及HTTP/2 的缓存策略</h6><p><strong>HTTP/2 缓存策略 + <a href="https://mnot.github.io/I-D/Published/h2-cache-digest/" target="_blank" rel="noopener">Cache Digests</a></strong></p>
+<p>问题</p>
+<p>如果客户端已经在缓存中有了一份 copy 怎么办，还要 push 吗</p>
+<ul>
+<li>客户端使用缓存摘要告诉服务端 某些东西已经缓存</li>
+</ul>
+<p><img src="https://pic3.zhimg.com/80/220e5f58c712ae45e629fe9e811257ba_hd.png" alt="img"></p>
+<p>Cache Digest 使用的是 <a href="https://www.imperialviolet.org/2011/04/29/filters.html" target="_blank" rel="noopener">Golumb Compressed Sets</a></p>
+<p>浏览器客户端可以通过一个连接发送<strong>少于 1K 字节</strong>的 Packets 给服务端，通知哪些是已经在缓存中存在的。</p>
+<h6 id="TCP"><a href="#TCP" class="headerlink" title="TCP"></a>TCP</h6><p>在 HTTP 开始之前 TCP 需要进行三次握手，来协商新连接的参数。这意味着在建立连接的时候，一个最简单的 HTTP 请求也需要 2 个 Round-Trip Time 才能完成 。</p>
+<p><img src="https://pic3.zhimg.com/050682be95718c8c72b2ed0b580701ba_r.jpg" alt="preview"></p>
+<p><a href="https://link.zhihu.com/?target=https%3A//tools.ietf.org/html/rfc7413" target="_blank" rel="noopener">TCP Fast Open</a> 允许应用在 TCP 握手期间（SYN 和 SYN+ACK packets）交换数据，这样可以减少一次 RTT，不幸的是目前<strong>只支持 Linux 以及 OSX</strong>，未来 TFO 在 HTTP上将会有更多巧妙的运用</p>
+<p>TFO 不保证与 SYN 数据包发送的数据将只出现一次;这是容易重复（由于重传），甚至被恶意的重放攻击。 因此，在一个 TFO 连接上使用 HTTP POST 并不是建立第一个请求的好主意。 并且，使用 GET 也依然会有很大的副作用，浏览器也没有好的办法来检测哪个 URL 可以做到这一点的</p>
+<h6 id="TLS"><a href="#TLS" class="headerlink" title="TLS"></a>TLS</h6><p>在传输应用数据之前，客户端必须与服务端协商密钥、加密算法等信息，服务端还要把自己的证书发给客户端表明其身份，这些环节构成 TLS 握手过程，还没把客户端和服务端处理时间算进去。光是 TLS 握手就需要消耗两个 RTT（Round-Trip Time，往返时间）</p>
+<p><img src="https://pic2.zhimg.com/80/cfb2f2fc8f2e2251085f205eb7b6bb01_hd.png" alt="img"></p>
+<p>而 <a href="https://link.zhihu.com/?target=https%3A//tools.ietf.org/html/rfc5077" target="_blank" rel="noopener">Session Tickets</a> 可以将 TLS 握手所需 RTT 减少到 1 个:</p>
+<p><img src="https://pic4.zhimg.com/80/f5ee2ff45dc42b770ede800ab893bb5b_hd.png" alt="img"></p>
+<p>不久的未来，<a href="https://link.zhihu.com/?target=https%3A//tlswg.github.io/tls13-spec/" target="_blank" rel="noopener">TLS 1.3</a> 将会支持<strong> Zero Round Trip</strong> 握手，HTTP 可以在第一个 Round Trip 就发送数据。</p>
+<p>原内容来自知乎<a href="https://www.zhihu.com/question/24774343/answer/96586977" target="_blank" rel="noopener"></a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Http/" rel="tag"># Http</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/08/23/布局/" rel="next" title="布局">
+                <i class="fa fa-chevron-left"></i> 布局
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/assets/img/pic.jpg"
+                alt="Gaomy" />
+            
+              <p class="site-author-name" itemprop="name">Gaomy</p>
+              <p class="site-description motion-element" itemprop="description">gao's blog</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#特性"><span class="nav-number">2.</span> <span class="nav-text">特性</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-多路复用（Multiplexing）"><span class="nav-number">2.1.</span> <span class="nav-text">1.多路复用（Multiplexing）</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#HTTP-1-x之前是："><span class="nav-number">2.1.1.</span> <span class="nav-text">HTTP 1.x之前是：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#更详细的描述多路复用："><span class="nav-number">2.1.2.</span> <span class="nav-text">更详细的描述多路复用：</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-二进制分帧"><span class="nav-number">2.2.</span> <span class="nav-text">2.二进制分帧</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#慢启动："><span class="nav-number">2.2.1.</span> <span class="nav-text">慢启动：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#拥塞避免"><span class="nav-number">2.2.2.</span> <span class="nav-text">拥塞避免</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#快速重传"><span class="nav-number">2.2.3.</span> <span class="nav-text">快速重传</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#快速恢复"><span class="nav-number">2.2.4.</span> <span class="nav-text">快速恢复</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#发送方窗口的上限值"><span class="nav-number">2.2.5.</span> <span class="nav-text">发送方窗口的上限值</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-首部压缩（Header-Compression）"><span class="nav-number">2.3.</span> <span class="nav-text">3.首部压缩（Header Compression）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-服务端推送（Server-push）"><span class="nav-number">2.4.</span> <span class="nav-text">4.服务端推送（Server push）</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#关键是何时Push"><span class="nav-number">2.4.1.</span> <span class="nav-text">关键是何时Push</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#HTTP-2-的server-push-及HTTP-2-的缓存策略"><span class="nav-number">2.4.2.</span> <span class="nav-text">HTTP /2 的server push 及HTTP/2 的缓存策略</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#TCP"><span class="nav-number">2.4.3.</span> <span class="nav-text">TCP</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#TLS"><span class="nav-number">2.4.4.</span> <span class="nav-text">TLS</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Gaomy</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
