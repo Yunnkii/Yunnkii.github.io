@@ -79,16 +79,22 @@
 
 
 
-<meta name="description" content="介绍在与 HTTP/1.1 完全语义兼容的基础上，进一步减少了网络延迟，大幅度的提升了 web 性能。 特性1.多路复用（Multiplexing）以下描述我认为相当准确">
+<meta name="description" content="关于HTTP协议：HTTP是建立在TCP协议之上，HTTP协议的瓶颈及其优化技巧都是基于TCP协议本身的特性，例如： TCP 建立连接的3次握手和断开连接的4次挥手以及每次建立连接带来的RTT延迟时间。 影响HTTP网络请求的因素主要有两个： 带宽和延迟 带宽：现在网络基础建设已经使得带宽得到极大的提升，我们不再会担心由带宽而影响网速，那么就只剩下延迟了。 延迟： 浏览器阻塞（HOL blocki">
 <meta name="keywords" content="Http">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HTTP2.0">
 <meta property="og:url" content="http://yoursite.com/2018/08/25/HTTP2-0/index.html">
 <meta property="og:site_name" content="Gaomy&#39;s blog">
-<meta property="og:description" content="介绍在与 HTTP/1.1 完全语义兼容的基础上，进一步减少了网络延迟，大幅度的提升了 web 性能。 特性1.多路复用（Multiplexing）以下描述我认为相当准确">
+<meta property="og:description" content="关于HTTP协议：HTTP是建立在TCP协议之上，HTTP协议的瓶颈及其优化技巧都是基于TCP协议本身的特性，例如： TCP 建立连接的3次握手和断开连接的4次挥手以及每次建立连接带来的RTT延迟时间。 影响HTTP网络请求的因素主要有两个： 带宽和延迟 带宽：现在网络基础建设已经使得带宽得到极大的提升，我们不再会担心由带宽而影响网速，那么就只剩下延迟了。 延迟： 浏览器阻塞（HOL blocki">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://tenny.qiniudn.com/3woshou.png">
+<meta property="og:image" content="http://tenny.qiniudn.com/http11.png">
+<meta property="og:image" content="http://tenny.qiniudn.com/DIF12.png">
 <meta property="og:image" content="https://pic2.zhimg.com/80/b1e608ddb7493608efea3e76912aabe1_hd.png">
+<meta property="og:image" content="http://tenny.qiniudn.com/duolufuyong.png">
 <meta property="og:image" content="https://pic4.zhimg.com/80/906e22193e61cd561325d93aae0f1e07_hd.jpg">
+<meta property="og:image" content="https://pic1.zhimg.com/80/v2-49fff32ae488ae89d94407c54767a19d_hd.jpg">
+<meta property="og:image" content="https://segmentfault.com/img/bV5bKR?w=640&h=185">
 <meta property="og:image" content="https://pic2.zhimg.com/80/ae5418b7da1c6593fd6addad0310faa5_hd.png">
 <meta property="og:image" content="http://c.hiphotos.baidu.com/baike/s%3D220/sign=71798a12d262853596e0d523a0ee76f2/fc1f4134970a304ecf36501ad6c8a786c9175c3e.jpg">
 <meta property="og:image" content="http://g.hiphotos.baidu.com/baike/s%3D250/sign=57bf76cbb751f819f525044feab54a76/42166d224f4a20a4288ecc2797529822730ed0ba.jpg">
@@ -100,11 +106,11 @@
 <meta property="og:image" content="https://pic3.zhimg.com/050682be95718c8c72b2ed0b580701ba_r.jpg">
 <meta property="og:image" content="https://pic2.zhimg.com/80/cfb2f2fc8f2e2251085f205eb7b6bb01_hd.png">
 <meta property="og:image" content="https://pic4.zhimg.com/80/f5ee2ff45dc42b770ede800ab893bb5b_hd.png">
-<meta property="og:updated_time" content="2018-08-25T11:55:38.456Z">
+<meta property="og:updated_time" content="2018-08-28T14:49:29.487Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HTTP2.0">
-<meta name="twitter:description" content="介绍在与 HTTP/1.1 完全语义兼容的基础上，进一步减少了网络延迟，大幅度的提升了 web 性能。 特性1.多路复用（Multiplexing）以下描述我认为相当准确">
-<meta name="twitter:image" content="https://pic2.zhimg.com/80/b1e608ddb7493608efea3e76912aabe1_hd.png">
+<meta name="twitter:description" content="关于HTTP协议：HTTP是建立在TCP协议之上，HTTP协议的瓶颈及其优化技巧都是基于TCP协议本身的特性，例如： TCP 建立连接的3次握手和断开连接的4次挥手以及每次建立连接带来的RTT延迟时间。 影响HTTP网络请求的因素主要有两个： 带宽和延迟 带宽：现在网络基础建设已经使得带宽得到极大的提升，我们不再会担心由带宽而影响网速，那么就只剩下延迟了。 延迟： 浏览器阻塞（HOL blocki">
+<meta name="twitter:image" content="http://tenny.qiniudn.com/3woshou.png">
 
 
 
@@ -314,16 +320,83 @@
       
 
       
-        <h4 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h4><p>在与 HTTP/1.1 完全语义兼容的基础上，进一步减少了网络延迟，大幅度的提升了 web 性能。</p>
+        <h4 id="关于HTTP协议："><a href="#关于HTTP协议：" class="headerlink" title="关于HTTP协议："></a>关于HTTP协议：</h4><p>HTTP是建立在TCP协议之上，HTTP协议的瓶颈及其优化技巧都是基于TCP协议本身的特性，例如：</p>
+<p>TCP 建立连接的<strong>3次握手</strong>和断开连接的<strong>4次挥手</strong>以及每次建立<strong>连接带来的RTT延迟时间</strong>。</p>
+<p>影响HTTP网络请求的因素主要有两个： 带宽和延迟</p>
+<p>带宽：现在网络基础建设已经使得带宽得到极大的提升，我们不再会担心由带宽而影响网速，那么就只剩下延迟了。</p>
+<h5 id="延迟："><a href="#延迟：" class="headerlink" title="延迟："></a>延迟：</h5><ol>
+<li><strong>浏览器阻塞（HOL blocking）</strong>：浏览器会因为一些原因阻塞请求。浏览器对于同一个域名，同时只能有 4 个连接（这个根据浏览器内核不同可能会有所差异），超过浏览器最大连接数限制，后续请求就会被阻塞。</li>
+<li><strong>DNS 查询（DNS Lookup）</strong>：浏览器需要知道目标服务器的 IP 才能建立连接。将域名解析为 IP 的这个系统就是 DNS。这个通常可以利用DNS缓存结果来达到减少这个时间的目的</li>
+<li><strong>建立连接（Initial connection）</strong>：HTTP 是基于 TCP 协议的，浏览器最快也要在第三次握手时才能捎带 HTTP 请求报文，达到真正的建立连接，但是这些连接无法复用会导致每次请求都经历三次握手和<a href="http://en.wikipedia.org/wiki/Slow-start" target="_blank" rel="noopener">慢启动</a>。三次握手在高延迟的场景下影响较明显，慢启动则对文件类大请求影响较大。</li>
+</ol>
+<p><img src="http://tenny.qiniudn.com/3woshou.png" alt="img"></p>
+<h5 id="关于连接"><a href="#关于连接" class="headerlink" title="关于连接"></a>关于连接</h5><p>怎么算是一个连接，HTTP 1.1 出现的keep-alive</p>
+<p>每次连接都要经历三次握手和慢启动，说明HTTP的连接实际上是TCP 的连接。</p>
+<h5 id="HTTP1-0和HTTP1-1的一些区别："><a href="#HTTP1-0和HTTP1-1的一些区别：" class="headerlink" title="HTTP1.0和HTTP1.1的一些区别："></a>HTTP1.0和HTTP1.1的一些区别：</h5><h6 id="1-缓存处理："><a href="#1-缓存处理：" class="headerlink" title="1.缓存处理："></a>1.缓存处理：</h6><p>HTTP1.0header使用 If-Modified-Since,Expires 等作为缓存标准的判断，HTTP1.1 引入更多的缓存策略： Entity tag, If-UnModified-Since ,If-Match, If-None-Match等更多可供选择的缓存头来控制缓存策略</p>
+<h6 id="2-带宽优化及网络连接"><a href="#2-带宽优化及网络连接" class="headerlink" title="2.带宽优化及网络连接"></a>2.带宽优化及网络连接</h6><p>HTTP1.0存在一些浪费带宽的情况，HTTP1.1 添加了头部中的range,客户端可以请求资源的一部分，返回响应码（206 Partial content）</p>
+<h6 id="3-错误处理的通知"><a href="#3-错误处理的通知" class="headerlink" title="3.错误处理的通知"></a>3.错误处理的通知</h6><p>新增错误处理通知的状态码，如409（Conflict）表示请求的资源与资源的当前状态发生冲突；410（Gone）表示服务器上的某个资源被永久性的删除</p>
+<p>409冲突：</p>
+<blockquote>
+<p>由于与目标资源的当前状态冲突，无法完成请求。此代码用于用户可能能够解决冲突并重新提交请求的情况。</p>
+<p>服务器应该生成一个有效负载，其中包含足够的信息供用户识别冲突源。</p>
+<p>冲突最有可能发生在响应PUT请求时。例如，如果正在使用版本控制并且包含PUT的表示更改为与早期（第三方）请求冲突的资源，则源服务器可能使用409响应来指示它无法完成请求。在这种情况下，响应表示可能包含对基于修订历史合并差异有用的信息。</p>
+</blockquote>
+<p>410（gone）</p>
+<blockquote>
+<p>410 Gone客户端错误响应代码表示在源服务器上不再可以访问目标资源，(永久删除)并且此条件可能是永久性的。</p>
+<p>如果您不知道此缺失是暂时的还是永久性的，<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/404" target="_blank" rel="noopener"><code>404</code></a>则应使用状态代码。</p>
+</blockquote>
+<p>put请求：<a href="https://www.zhihu.com/question/48482736" target="_blank" rel="noopener">与post区别</a></p>
+<p><a href="https://www.oschina.net/translate/put-or-post" target="_blank" rel="noopener">区别</a></p>
+<p><a href="https://www.zhihu.com/question/48482736" target="_blank" rel="noopener">区别</a></p>
+<p>put请求用于更新资源</p>
+<p>post用于创建资源</p>
+<h6 id="4-Host-头处理"><a href="#4-Host-头处理" class="headerlink" title="4.Host 头处理"></a>4.Host 头处理</h6><p>添加请求的主机名，HTTP1.0 的版本，认为每个IP与一个主机对应的，但是由于虚拟主机的出现，在一台物理服务器上可以存在多个虚拟主机（Multi-homed Web Servers），并且它们共享一个IP地址，所以新增了主机名</p>
+<h6 id="5-长连接"><a href="#5-长连接" class="headerlink" title="5.长连接"></a>5.长连接</h6><p>HTTP 1.1支持长连接（PersistentConnection）和请求的流水线（Pipelining）处理，在一个TCP连接上可以传送多个HTTP请求和响应，减少了建立和关闭连接的消耗和延迟，在HTTP1.1中默认开启Connection： keep-alive，一定程度上弥补了HTTP1.0每次请求都要创建连接的缺点。以下是常见的HTTP1.0：</p>
+<p><img src="http://tenny.qiniudn.com/http11.png" alt="img"></p>
+<p><img src="http://tenny.qiniudn.com/DIF12.png" alt="img"></p>
+<h5 id="HTTP1-0-1-1现存的一些问题"><a href="#HTTP1-0-1-1现存的一些问题" class="headerlink" title="HTTP1.0 ,1.1现存的一些问题"></a>HTTP1.0 ,1.1现存的一些问题</h5><h6 id="1-HTTP1-x在传输数据时，每次都需要重新建立连接，无疑增加了大量的延迟时间，特别是在移动端更为突出"><a href="#1-HTTP1-x在传输数据时，每次都需要重新建立连接，无疑增加了大量的延迟时间，特别是在移动端更为突出" class="headerlink" title="1.HTTP1.x在传输数据时，每次都需要重新建立连接，无疑增加了大量的延迟时间，特别是在移动端更为突出"></a>1.HTTP1.x在传输数据时，每次都需要重新建立连接，无疑增加了大量的延迟时间，特别是在移动端更为突出</h6><h6 id="2-HTTP1-x在传输数据时，所有传输的内容都是明文，客户端和服务器端都无法验证对方的身份，这在一定程度上无法保证数据的安全性"><a href="#2-HTTP1-x在传输数据时，所有传输的内容都是明文，客户端和服务器端都无法验证对方的身份，这在一定程度上无法保证数据的安全性" class="headerlink" title="2.HTTP1.x在传输数据时，所有传输的内容都是明文，客户端和服务器端都无法验证对方的身份，这在一定程度上无法保证数据的安全性"></a>2.HTTP1.x在传输数据时，所有传输的内容都是明文，客户端和服务器端都无法验证对方的身份，这在一定程度上无法保证数据的安全性</h6><h6 id="3-HTTP1-x在使用时，header里携带的内容过大，在一定程度上增加了传输的成本，并且每次请求header基本不怎么变化，尤其在移动端增加用户流量"><a href="#3-HTTP1-x在使用时，header里携带的内容过大，在一定程度上增加了传输的成本，并且每次请求header基本不怎么变化，尤其在移动端增加用户流量" class="headerlink" title="3. HTTP1.x在使用时，header里携带的内容过大，在一定程度上增加了传输的成本，并且每次请求header基本不怎么变化，尤其在移动端增加用户流量"></a>3. HTTP1.x在使用时，header里携带的内容过大，在一定程度上增加了传输的成本，并且每次请求header基本不怎么变化，尤其在移动端增加用户流量</h6><h6 id="4-虽然HTTP1-x支持了keep-alive，来弥补多次创建连接产生的延迟，但是keep-alive使用多了同样会给服务端带来大量的性能压力，并且对于单个文件被不断请求的服务-例如图片存放网站-，keep-alive可能会极大的影响性能，因为它在文件被请求之后还保持了不必要的连接很长时间。"><a href="#4-虽然HTTP1-x支持了keep-alive，来弥补多次创建连接产生的延迟，但是keep-alive使用多了同样会给服务端带来大量的性能压力，并且对于单个文件被不断请求的服务-例如图片存放网站-，keep-alive可能会极大的影响性能，因为它在文件被请求之后还保持了不必要的连接很长时间。" class="headerlink" title="4.虽然HTTP1.x支持了keep-alive，来弥补多次创建连接产生的延迟，但是keep-alive使用多了同样会给服务端带来大量的性能压力，并且对于单个文件被不断请求的服务(例如图片存放网站)，keep-alive可能会极大的影响性能，因为它在文件被请求之后还保持了不必要的连接很长时间。"></a>4.虽然HTTP1.x支持了keep-alive，来弥补多次创建连接产生的延迟，但是keep-alive使用多了同样会给服务端带来大量的性能压力，并且对于单个文件被不断请求的服务(例如图片存放网站)，keep-alive可能会极大的影响性能，因为它在文件被请求之后还保持了不必要的连接很长时间。</h6><h5 id="SPDY"><a href="#SPDY" class="headerlink" title="SPDY"></a>SPDY</h5><h6 id="使用SPDY加快网站速度"><a href="#使用SPDY加快网站速度" class="headerlink" title="使用SPDY加快网站速度"></a>使用SPDY加快网站速度</h6><p>2012年google提出了SPDY的方案，大家才开始从正面看待和解决老版本HTTP协议本身的问题，SPDY可以说是综合了HTTPS和HTTP两者有点于一体的传输协议，主要解决：</p>
+<ol>
+<li><strong>降低延迟</strong>，针对HTTP高延迟的问题，SPDY优雅的采取了多路复用（multiplexing）。多路复用通过多个请求stream共享一个tcp连接的方式，解决了HOL blocking的问题，降低了延迟同时提高了带宽的利用率。</li>
+<li><strong>请求优先级</strong>（request prioritization）。多路复用带来一个新的问题是，在连接共享的基础之上有可能会导致关键请求被阻塞。SPDY允许给每个request设置优先级，这样重要的请求就会优先得到响应。比如浏览器加载首页，首页的html内容应该优先展示，之后才是各种静态资源文件，脚本文件等加载，这样可以保证用户能第一时间看到网页内容。</li>
+<li><strong>header压缩</strong>。前面提到HTTP1.x的header很多时候都是重复多余的。选择合适的压缩算法可以减小包的大小和数量。</li>
+<li><strong>基于HTTPS的加密协议传输</strong>，大大提高了传输数据的可靠性。</li>
+<li><strong>服务端推送</strong>（server push），采用了SPDY的网页，例如我的网页有一个sytle.css的请求，在客户端收到sytle.css数据的同时，服务端会将sytle.js的文件推送给客户端，当客户端再次尝试获取sytle.js时就可以直接从缓存中获取到，不用再发请求了。SPDY构成图</li>
+</ol>
+<p>HTTP</p>
+<p>SPDY</p>
+<p>SSL</p>
+<p>TCP</p>
+<p>SPDY位于HTTP之下，TCP和SSL之上，这样可以轻松兼容老版本的HTTP协议(将HTTP1.x的内容封装成一种新的frame格式)，同时可以使用已有的SSL功能。</p>
+<h4 id="HTTP2-0的前世今生"><a href="#HTTP2-0的前世今生" class="headerlink" title="HTTP2.0的前世今生"></a>HTTP2.0的前世今生</h4><p>顾名思义有了HTTP1.x，那么HTTP2.0也就顺理成章的出现了。HTTP2.0可以说是SPDY的升级版（其实原本也是基于SPDY设计的），但是，HTTP2.0 跟 SPDY 仍有不同的地方，主要是以下两点：</p>
+<ul>
+<li>HTTP2.0 支持明文 HTTP 传输，而 SPDY 强制使用 HTTPS</li>
+<li>HTTP2.0 消息头的压缩算法采用 <a href="http://http2.github.io/http2-spec/compression.html" target="_blank" rel="noopener">HPACK</a>，而非 SPDY 采用的 <a href="http://zh.wikipedia.org/wiki/DEFLATE" target="_blank" rel="noopener">DEFLATE</a></li>
+</ul>
+<h4 id="HTTP-2介绍"><a href="#HTTP-2介绍" class="headerlink" title="HTTP/2介绍"></a>HTTP/2介绍</h4><p>在与 HTTP/1.1 完全语义兼容的基础上，进一步减少了网络延迟，大幅度的提升了 web 性能。</p>
 <h4 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h4><h5 id="1-多路复用（Multiplexing）"><a href="#1-多路复用（Multiplexing）" class="headerlink" title="1.多路复用（Multiplexing）"></a>1.多路复用（Multiplexing）</h5><p>以下描述我认为相当准确</p>
 <a id="more"></a>
 <p><strong>允许同时通过单一的 HTTP/2 连接发起多重的请求-响应消息。</strong></p>
+<p><strong>HTTP/2 中，同域名下所有通信都在单个连接上完成，该连接可以承载任意数量的双向数据流。</strong></p>
 <p>简而言之：</p>
 <p>HTTP/2 通信都在一个连接上完成，这个连接可以承载任意数量的双向数据流</p>
 <p><img src="https://pic2.zhimg.com/80/b1e608ddb7493608efea3e76912aabe1_hd.png" alt="img"></p>
-<h6 id="HTTP-1-x之前是："><a href="#HTTP-1-x之前是：" class="headerlink" title="HTTP 1.x之前是："></a>HTTP 1.x之前是：</h6><h6 id="更详细的描述多路复用："><a href="#更详细的描述多路复用：" class="headerlink" title="更详细的描述多路复用："></a>更详细的描述多路复用：</h6><h5 id="2-二进制分帧"><a href="#2-二进制分帧" class="headerlink" title="2.二进制分帧"></a>2.二进制分帧</h5><p>【突破 HTTP1.1 的性能限制，改进传输性能，实现低延迟和高吞吐量】 关键之一是在应用层（HTTP/2）和传输层(TCP or UDP)之间增加一个二进制分帧层。</p>
+<p>原理：</p>
+<p><img src="http://tenny.qiniudn.com/duolufuyong.png" alt="img"></p>
+<h6 id="HTTP-1-x之前是："><a href="#HTTP-1-x之前是：" class="headerlink" title="HTTP 1.x之前是："></a>HTTP 1.x之前是：</h6><h6 id="更详细的描述多路复用："><a href="#更详细的描述多路复用：" class="headerlink" title="更详细的描述多路复用："></a>更详细的描述多路复用：</h6><h5 id="2-二进制分帧"><a href="#2-二进制分帧" class="headerlink" title="2.二进制分帧"></a>2.二进制分帧</h5><blockquote>
+<p>Binary protocols are more efficient to parse, more compact “on the wire”, and most importantly, they are much less error-prone, compared to textual protocols like HTTP/1.x, because they often have a number of affordances to “help” with things like whitespace handling, capitalization, line endings, blank lines and so on.</p>
+<p>For example, HTTP/1.1 defines <a href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec4.html#sec4.4" target="_blank" rel="noopener">four different ways to parse a message</a>; in HTTP/2, there’s just one code path.</p>
+<p>It’s true that HTTP/2 isn’t usable through telnet, but we already have some tool support, such as a <a href="https://bugs.wireshark.org/bugzilla/show_bug.cgi?id=9042" target="_blank" rel="noopener">Wireshark plugin</a>.</p>
+</blockquote>
+<p>they often have a number of  to “help” with things like whitespace handling, capitalization, line endings, blank lines and so on.</p>
+<p>TTP1.x的解析是基于文本。基于文本协议的格式解析存在天然缺陷，文本的表现形式有多样性，要做到健壮性考虑的场景必然很多，二进制则不同，只认0和1的组合。基于这种考虑HTTP2.0的协议解析决定采用二进制格式，实现方便且健壮。</p>
+<p>使用二进制传输的好处在于它<strong>更接近于计算机存储特点</strong>，传统的文本流传输形式存在一些解析上的复杂性，如对消息长度(Message Length)的解析要分为4种情况，详见<a href="https://link.zhihu.com/?target=https%3A//www.w3.org/Protocols/rfc2616/rfc2616-sec4.html%23sec4.4" target="_blank" rel="noopener">w3c</a>，而使用二进制方式则不存在这个问题。需要注意的是http/2的二进制形式并没有改变http/1.1的体系，只是把传输报文格式改了</p>
+<p>【突破 HTTP1.1 的性能限制，改进传输性能，实现低延迟和高吞吐量】 关键之一是在应用层（HTTP/2）和传输层(TCP or UDP)之间增加一个二进制分帧层。</p>
 <p><img src="https://pic4.zhimg.com/80/906e22193e61cd561325d93aae0f1e07_hd.jpg" alt="img"></p>
 <p>二进制分帧层将所有的传输消息分为更小的消息和帧（frame），并对他们采用二进制格式的编码，其中HTTP1.x中的受不信息会被封装到HEADER frame 中相对的Request body被封装到 DATA frame 中 </p>
+<p><img src="https://pic1.zhimg.com/80/v2-49fff32ae488ae89d94407c54767a19d_hd.jpg" alt="img"></p>
+<p>客户端发了两次请求，第一次请求有完整的http报文头部，第二次请求的时候只有一个path的字段不一样，但是这次报文头它只需要发送一个path的字段就好了，这样就大大减少了发送的量。这个的实现要求客户端和服务同时维护一个报文头表。上面提到的少了4kb的流量很可能是这个节省下来的。这个的意义还是很大的，因为动态请求有时候可能只需要发送几个字节的数据，但却需要发送一个几百个字节的报文头（500 ~ 800）</p>
+<p><img src="https://segmentfault.com/img/bV5bKR?w=640&amp;h=185" alt="clipboard.png"></p>
 <p>通信都在一个连接上完车给，这个连接可以承载任意数量的双向流。</p>
 <p><img src="https://pic2.zhimg.com/80/ae5418b7da1c6593fd6addad0310faa5_hd.png" alt="img"></p>
 <p>实现低延迟的关键是二进制分帧，那么导致低延迟的原因是TCP连接的</p>
@@ -403,7 +476,14 @@
 <p>而 <a href="https://link.zhihu.com/?target=https%3A//tools.ietf.org/html/rfc5077" target="_blank" rel="noopener">Session Tickets</a> 可以将 TLS 握手所需 RTT 减少到 1 个:</p>
 <p><img src="https://pic4.zhimg.com/80/f5ee2ff45dc42b770ede800ab893bb5b_hd.png" alt="img"></p>
 <p>不久的未来，<a href="https://link.zhihu.com/?target=https%3A//tlswg.github.io/tls13-spec/" target="_blank" rel="noopener">TLS 1.3</a> 将会支持<strong> Zero Round Trip</strong> 握手，HTTP 可以在第一个 Round Trip 就发送数据。</p>
-<p>原内容来自知乎<a href="https://www.zhihu.com/question/24774343/answer/96586977" target="_blank" rel="noopener"></a></p>
+<p><a href="https://www.zhihu.com/question/24774343/answer/96586977" target="_blank" rel="noopener"></a></p>
+<p><a href="https://developers.google.com/web/fundamentals/performance/http2/" target="_blank" rel="noopener">HTTP/2 简介</a></p>
+<p><a href="https://http2.github.io/faq/" target="_blank" rel="noopener">HTTP/2 FAQ</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/29609078" target="_blank" rel="noopener">网站升级到HTTP/2</a></p>
+<p><a href="https://searchengineland.com/everyone-moving-http2-236716" target="_blank" rel="noopener">Moving to HTTP/2</a></p>
+<p><a href="http://www.alloyteam.com/2016/07/httphttp2-0spdyhttps-reading-this-is-enough/" target="_blank" rel="noopener">SPDY HTTP/2</a></p>
+<p><a href="https://linux.cn/article-8781-1.html" target="_blank" rel="noopener">Linux中国 HTTP/2</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/26559480" target="_blank" rel="noopener">HTTP/2</a></p>
 
       
     </div>
@@ -434,8 +514,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/08/23/布局/" rel="next" title="布局">
-                <i class="fa fa-chevron-left"></i> 布局
+              <a href="/2018/08/21/学习TypeScript-基础/" rel="next" title="学习TypeScript-基础">
+                <i class="fa fa-chevron-left"></i> 学习TypeScript-基础
               </a>
             
           </div>
@@ -443,6 +523,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/08/26/跨域/" rel="prev" title="跨域">
+                跨域 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -523,7 +607,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">34</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -534,7 +618,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -545,7 +629,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -578,7 +662,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#特性"><span class="nav-number">2.</span> <span class="nav-text">特性</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-多路复用（Multiplexing）"><span class="nav-number">2.1.</span> <span class="nav-text">1.多路复用（Multiplexing）</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#HTTP-1-x之前是："><span class="nav-number">2.1.1.</span> <span class="nav-text">HTTP 1.x之前是：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#更详细的描述多路复用："><span class="nav-number">2.1.2.</span> <span class="nav-text">更详细的描述多路复用：</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-二进制分帧"><span class="nav-number">2.2.</span> <span class="nav-text">2.二进制分帧</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#慢启动："><span class="nav-number">2.2.1.</span> <span class="nav-text">慢启动：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#拥塞避免"><span class="nav-number">2.2.2.</span> <span class="nav-text">拥塞避免</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#快速重传"><span class="nav-number">2.2.3.</span> <span class="nav-text">快速重传</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#快速恢复"><span class="nav-number">2.2.4.</span> <span class="nav-text">快速恢复</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#发送方窗口的上限值"><span class="nav-number">2.2.5.</span> <span class="nav-text">发送方窗口的上限值</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-首部压缩（Header-Compression）"><span class="nav-number">2.3.</span> <span class="nav-text">3.首部压缩（Header Compression）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-服务端推送（Server-push）"><span class="nav-number">2.4.</span> <span class="nav-text">4.服务端推送（Server push）</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#关键是何时Push"><span class="nav-number">2.4.1.</span> <span class="nav-text">关键是何时Push</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#HTTP-2-的server-push-及HTTP-2-的缓存策略"><span class="nav-number">2.4.2.</span> <span class="nav-text">HTTP /2 的server push 及HTTP/2 的缓存策略</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#TCP"><span class="nav-number">2.4.3.</span> <span class="nav-text">TCP</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#TLS"><span class="nav-number">2.4.4.</span> <span class="nav-text">TLS</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#关于HTTP协议："><span class="nav-number">1.</span> <span class="nav-text">关于HTTP协议：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#延迟："><span class="nav-number">1.1.</span> <span class="nav-text">延迟：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#关于连接"><span class="nav-number">1.2.</span> <span class="nav-text">关于连接</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#HTTP1-0和HTTP1-1的一些区别："><span class="nav-number">1.3.</span> <span class="nav-text">HTTP1.0和HTTP1.1的一些区别：</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-缓存处理："><span class="nav-number">1.3.1.</span> <span class="nav-text">1.缓存处理：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-带宽优化及网络连接"><span class="nav-number">1.3.2.</span> <span class="nav-text">2.带宽优化及网络连接</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-错误处理的通知"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.错误处理的通知</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-Host-头处理"><span class="nav-number">1.3.4.</span> <span class="nav-text">4.Host 头处理</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#5-长连接"><span class="nav-number">1.3.5.</span> <span class="nav-text">5.长连接</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#HTTP1-0-1-1现存的一些问题"><span class="nav-number">1.4.</span> <span class="nav-text">HTTP1.0 ,1.1现存的一些问题</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-HTTP1-x在传输数据时，每次都需要重新建立连接，无疑增加了大量的延迟时间，特别是在移动端更为突出"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.HTTP1.x在传输数据时，每次都需要重新建立连接，无疑增加了大量的延迟时间，特别是在移动端更为突出</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-HTTP1-x在传输数据时，所有传输的内容都是明文，客户端和服务器端都无法验证对方的身份，这在一定程度上无法保证数据的安全性"><span class="nav-number">1.4.2.</span> <span class="nav-text">2.HTTP1.x在传输数据时，所有传输的内容都是明文，客户端和服务器端都无法验证对方的身份，这在一定程度上无法保证数据的安全性</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#3-HTTP1-x在使用时，header里携带的内容过大，在一定程度上增加了传输的成本，并且每次请求header基本不怎么变化，尤其在移动端增加用户流量"><span class="nav-number">1.4.3.</span> <span class="nav-text">3. HTTP1.x在使用时，header里携带的内容过大，在一定程度上增加了传输的成本，并且每次请求header基本不怎么变化，尤其在移动端增加用户流量</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-虽然HTTP1-x支持了keep-alive，来弥补多次创建连接产生的延迟，但是keep-alive使用多了同样会给服务端带来大量的性能压力，并且对于单个文件被不断请求的服务-例如图片存放网站-，keep-alive可能会极大的影响性能，因为它在文件被请求之后还保持了不必要的连接很长时间。"><span class="nav-number">1.4.4.</span> <span class="nav-text">4.虽然HTTP1.x支持了keep-alive，来弥补多次创建连接产生的延迟，但是keep-alive使用多了同样会给服务端带来大量的性能压力，并且对于单个文件被不断请求的服务(例如图片存放网站)，keep-alive可能会极大的影响性能，因为它在文件被请求之后还保持了不必要的连接很长时间。</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#SPDY"><span class="nav-number">1.5.</span> <span class="nav-text">SPDY</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#使用SPDY加快网站速度"><span class="nav-number">1.5.1.</span> <span class="nav-text">使用SPDY加快网站速度</span></a></li></ol></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP2-0的前世今生"><span class="nav-number">2.</span> <span class="nav-text">HTTP2.0的前世今生</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HTTP-2介绍"><span class="nav-number">3.</span> <span class="nav-text">HTTP/2介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#特性"><span class="nav-number">4.</span> <span class="nav-text">特性</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-多路复用（Multiplexing）"><span class="nav-number">4.1.</span> <span class="nav-text">1.多路复用（Multiplexing）</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#HTTP-1-x之前是："><span class="nav-number">4.1.1.</span> <span class="nav-text">HTTP 1.x之前是：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#更详细的描述多路复用："><span class="nav-number">4.1.2.</span> <span class="nav-text">更详细的描述多路复用：</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-二进制分帧"><span class="nav-number">4.2.</span> <span class="nav-text">2.二进制分帧</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#慢启动："><span class="nav-number">4.2.1.</span> <span class="nav-text">慢启动：</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#拥塞避免"><span class="nav-number">4.2.2.</span> <span class="nav-text">拥塞避免</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#快速重传"><span class="nav-number">4.2.3.</span> <span class="nav-text">快速重传</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#快速恢复"><span class="nav-number">4.2.4.</span> <span class="nav-text">快速恢复</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#发送方窗口的上限值"><span class="nav-number">4.2.5.</span> <span class="nav-text">发送方窗口的上限值</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-首部压缩（Header-Compression）"><span class="nav-number">4.3.</span> <span class="nav-text">3.首部压缩（Header Compression）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-服务端推送（Server-push）"><span class="nav-number">4.4.</span> <span class="nav-text">4.服务端推送（Server push）</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#关键是何时Push"><span class="nav-number">4.4.1.</span> <span class="nav-text">关键是何时Push</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#HTTP-2-的server-push-及HTTP-2-的缓存策略"><span class="nav-number">4.4.2.</span> <span class="nav-text">HTTP /2 的server push 及HTTP/2 的缓存策略</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#TCP"><span class="nav-number">4.4.3.</span> <span class="nav-text">TCP</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#TLS"><span class="nav-number">4.4.4.</span> <span class="nav-text">TLS</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
