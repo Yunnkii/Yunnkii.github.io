@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="1、let与var   let 声明具有块级作用域 (如果没有块: 用于计数的循环变量泄露为全局变量)  对于一段代码 123456var a = [];for (var i = 0; i &amp;lt; 10; i++) &amp;#123;  a[i] = function () &amp;#123;    console.log(i);  &amp;#125;;&amp;#125; 用 var 声明的变量是全局的 这里的i 就是">
+<meta name="description" content="let与var let 声明具有块级作用域 (如果没有块: 用于计数的循环变量泄露为全局变量)  对于一段代码 123456var a = [];for (var i = 0; i &amp;lt; 10; i++) &amp;#123;  a[i] = function () &amp;#123;    console.log(i);  &amp;#125;;&amp;#125; 用 var 声明的变量是全局的 这里的i 就是一个，就">
 <meta name="keywords" content="ES6">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ES6">
+<meta property="og:title" content="ES6 变量声明">
 <meta property="og:url" content="http://yoursite.com/2018/08/08/ES6/index.html">
 <meta property="og:site_name" content="Gaomy&#39;s blog">
-<meta property="og:description" content="1、let与var   let 声明具有块级作用域 (如果没有块: 用于计数的循环变量泄露为全局变量)  对于一段代码 123456var a = [];for (var i = 0; i &amp;lt; 10; i++) &amp;#123;  a[i] = function () &amp;#123;    console.log(i);  &amp;#125;;&amp;#125; 用 var 声明的变量是全局的 这里的i 就是">
+<meta property="og:description" content="let与var let 声明具有块级作用域 (如果没有块: 用于计数的循环变量泄露为全局变量)  对于一段代码 123456var a = [];for (var i = 0; i &amp;lt; 10; i++) &amp;#123;  a[i] = function () &amp;#123;    console.log(i);  &amp;#125;;&amp;#125; 用 var 声明的变量是全局的 这里的i 就是一个，就">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-08-14T08:40:46.517Z">
+<meta property="og:updated_time" content="2018-08-28T15:55:08.076Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ES6">
-<meta name="twitter:description" content="1、let与var   let 声明具有块级作用域 (如果没有块: 用于计数的循环变量泄露为全局变量)  对于一段代码 123456var a = [];for (var i = 0; i &amp;lt; 10; i++) &amp;#123;  a[i] = function () &amp;#123;    console.log(i);  &amp;#125;;&amp;#125; 用 var 声明的变量是全局的 这里的i 就是">
+<meta name="twitter:title" content="ES6 变量声明">
+<meta name="twitter:description" content="let与var let 声明具有块级作用域 (如果没有块: 用于计数的循环变量泄露为全局变量)  对于一段代码 123456var a = [];for (var i = 0; i &amp;lt; 10; i++) &amp;#123;  a[i] = function () &amp;#123;    console.log(i);  &amp;#125;;&amp;#125; 用 var 声明的变量是全局的 这里的i 就是一个，就">
 
 
 
@@ -126,7 +126,7 @@
 
 
 
-  <title>ES6 | Gaomy's blog</title>
+  <title>ES6 变量声明 | Gaomy's blog</title>
   
 
 
@@ -250,7 +250,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">ES6</h1>
+          <h1 class="post-title" itemprop="name headline">ES6 变量声明</h1>
         
 
         <div class="post-meta">
@@ -300,8 +300,7 @@
       
 
       
-        <p>1、let与var </p>
-<ul>
+        <h5 id="let与var"><a href="#let与var" class="headerlink" title="let与var"></a>let与var</h5><ul>
 <li>let 声明具有块级作用域 (如果没有块: 用于计数的循环变量泄露为全局变量)</li>
 </ul>
 <p>对于一段代码</p>
@@ -310,6 +309,7 @@
 <blockquote>
 <p>理解: 数组元素的[i] 与console.log(i)的i 不同,元素这里是立即会获取 增长的i 但是 console.log(i) 只是一个声明,在执行的时候,再去拿i 的值,它拿到的i 的值,是最后增长结束的 i的值,下面这样会有不同</p>
 </blockquote>
+<a id="more"></a>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var a = [];</span><br><span class="line">for (var i = 0; i &lt; 10; i++) &#123;</span><br><span class="line">  a[i] = function () &#123;</span><br><span class="line">    console.log(i);</span><br><span class="line">  &#125;();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>立即执行的话，会不同 就是输出理想的 1-9</p>
 <p>如果使用 let</p>
@@ -321,7 +321,7 @@
 <p>就是设置循环变量的那部分是一个父作用域，而循环体内部是一个单独的子作用域</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">for (let i = 0; i &lt; 3; i++) &#123;</span><br><span class="line">  let i = &apos;abc&apos;;</span><br><span class="line">  console.log(i);</span><br><span class="line">&#125;</span><br><span class="line">// abc</span><br><span class="line">// abc</span><br><span class="line">// abc</span><br></pre></td></tr></table></figure>
-<ul>
+<h6 id="let"><a href="#let" class="headerlink" title="let"></a>let</h6><ul>
 <li>let 声明 不存在变量提升</li>
 </ul>
 <p>var 声明变量,会发生提升,变量可以在声明之前使用 值 为 undefined</p>
@@ -336,8 +336,7 @@
 <p>没有块级作用域  易造成 用于计数的循环变量泄露为全局变量</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">var s = &apos;hello&apos;;</span><br><span class="line"></span><br><span class="line">for (var i = 0; i &lt; s.length; i++) &#123;</span><br><span class="line">  console.log(s[i]); </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">console.log(i); // 5</span><br></pre></td></tr></table></figure>
 <p>上面代码中，变量<code>i</code>只用来控制循环，但是循环结束后，它并没有消失，泄露成了全局变量。</p>
-<p>const  声明一个只读的常量</p>
-<p>本质: </p>
+<h6 id="const-声明一个只读的常量"><a href="#const-声明一个只读的常量" class="headerlink" title="const  声明一个只读的常量"></a>const  声明一个只读的常量</h6><p>本质: </p>
 <blockquote>
 <p>并不是变量的值不得改动，而是变量指向的那个内存地址所保存的数据不得改动.</p>
 <p>对于简单类型的数据（数值、字符串、布尔值），值就保存在变量指向的那个内存地址，因此等同于常量。但对于复合类型的数据（主要是对象和数组），变量指向的内存地址，保存的只是一个指向实际数据的指针，<code>const</code>只能保证这个指针是固定的（即总是指向另一个固定的地址），至于它指向的数据结构是不是可变的，就完全不能控制了</p>
@@ -458,8 +457,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -523,6 +531,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-5"><a class="nav-link" href="#let与var"><span class="nav-number">1.</span> <span class="nav-text">let与var</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#let"><span class="nav-number">1.1.</span> <span class="nav-text">let</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#const-声明一个只读的常量"><span class="nav-number">1.2.</span> <span class="nav-text">const  声明一个只读的常量</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

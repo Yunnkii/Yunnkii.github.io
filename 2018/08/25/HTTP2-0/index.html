@@ -79,13 +79,13 @@
 
 
 
-<meta name="description" content="关于HTTP协议：HTTP是建立在TCP协议之上，HTTP协议的瓶颈及其优化技巧都是基于TCP协议本身的特性，例如： TCP 建立连接的3次握手和断开连接的4次挥手以及每次建立连接带来的RTT延迟时间。 影响HTTP网络请求的因素主要有两个： 带宽和延迟 带宽：现在网络基础建设已经使得带宽得到极大的提升，我们不再会担心由带宽而影响网速，那么就只剩下延迟了。 延迟： 浏览器阻塞（HOL blocki">
+<meta name="description" content="关于HTTP协议：HTTP是建立在TCP协议之上，HTTP协议的瓶颈及其优化技巧都是基于TCP协议本身的特性，例如： TCP 建立连接的3次握手和断开连接的4次挥手以及每次建立连接带来的RTT延迟时间。 影响HTTP网络请求的因素主要有两个： 带宽和延迟 带宽：现在网络基础建设已经使得带宽得到极大的提升，我们不再会担心由带宽而影响网速，那么就只剩下延迟了。">
 <meta name="keywords" content="Http">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HTTP2.0">
 <meta property="og:url" content="http://yoursite.com/2018/08/25/HTTP2-0/index.html">
 <meta property="og:site_name" content="Gaomy&#39;s blog">
-<meta property="og:description" content="关于HTTP协议：HTTP是建立在TCP协议之上，HTTP协议的瓶颈及其优化技巧都是基于TCP协议本身的特性，例如： TCP 建立连接的3次握手和断开连接的4次挥手以及每次建立连接带来的RTT延迟时间。 影响HTTP网络请求的因素主要有两个： 带宽和延迟 带宽：现在网络基础建设已经使得带宽得到极大的提升，我们不再会担心由带宽而影响网速，那么就只剩下延迟了。 延迟： 浏览器阻塞（HOL blocki">
+<meta property="og:description" content="关于HTTP协议：HTTP是建立在TCP协议之上，HTTP协议的瓶颈及其优化技巧都是基于TCP协议本身的特性，例如： TCP 建立连接的3次握手和断开连接的4次挥手以及每次建立连接带来的RTT延迟时间。 影响HTTP网络请求的因素主要有两个： 带宽和延迟 带宽：现在网络基础建设已经使得带宽得到极大的提升，我们不再会担心由带宽而影响网速，那么就只剩下延迟了。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://tenny.qiniudn.com/3woshou.png">
 <meta property="og:image" content="http://tenny.qiniudn.com/http11.png">
@@ -106,10 +106,10 @@
 <meta property="og:image" content="https://pic3.zhimg.com/050682be95718c8c72b2ed0b580701ba_r.jpg">
 <meta property="og:image" content="https://pic2.zhimg.com/80/cfb2f2fc8f2e2251085f205eb7b6bb01_hd.png">
 <meta property="og:image" content="https://pic4.zhimg.com/80/f5ee2ff45dc42b770ede800ab893bb5b_hd.png">
-<meta property="og:updated_time" content="2018-08-28T14:49:29.487Z">
+<meta property="og:updated_time" content="2018-08-28T15:52:30.464Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HTTP2.0">
-<meta name="twitter:description" content="关于HTTP协议：HTTP是建立在TCP协议之上，HTTP协议的瓶颈及其优化技巧都是基于TCP协议本身的特性，例如： TCP 建立连接的3次握手和断开连接的4次挥手以及每次建立连接带来的RTT延迟时间。 影响HTTP网络请求的因素主要有两个： 带宽和延迟 带宽：现在网络基础建设已经使得带宽得到极大的提升，我们不再会担心由带宽而影响网速，那么就只剩下延迟了。 延迟： 浏览器阻塞（HOL blocki">
+<meta name="twitter:description" content="关于HTTP协议：HTTP是建立在TCP协议之上，HTTP协议的瓶颈及其优化技巧都是基于TCP协议本身的特性，例如： TCP 建立连接的3次握手和断开连接的4次挥手以及每次建立连接带来的RTT延迟时间。 影响HTTP网络请求的因素主要有两个： 带宽和延迟 带宽：现在网络基础建设已经使得带宽得到极大的提升，我们不再会担心由带宽而影响网速，那么就只剩下延迟了。">
 <meta name="twitter:image" content="http://tenny.qiniudn.com/3woshou.png">
 
 
@@ -324,6 +324,7 @@
 <p>TCP 建立连接的<strong>3次握手</strong>和断开连接的<strong>4次挥手</strong>以及每次建立<strong>连接带来的RTT延迟时间</strong>。</p>
 <p>影响HTTP网络请求的因素主要有两个： 带宽和延迟</p>
 <p>带宽：现在网络基础建设已经使得带宽得到极大的提升，我们不再会担心由带宽而影响网速，那么就只剩下延迟了。</p>
+<a id="more"></a>
 <h5 id="延迟："><a href="#延迟：" class="headerlink" title="延迟："></a>延迟：</h5><ol>
 <li><strong>浏览器阻塞（HOL blocking）</strong>：浏览器会因为一些原因阻塞请求。浏览器对于同一个域名，同时只能有 4 个连接（这个根据浏览器内核不同可能会有所差异），超过浏览器最大连接数限制，后续请求就会被阻塞。</li>
 <li><strong>DNS 查询（DNS Lookup）</strong>：浏览器需要知道目标服务器的 IP 才能建立连接。将域名解析为 IP 的这个系统就是 DNS。这个通常可以利用DNS缓存结果来达到减少这个时间的目的</li>
@@ -375,7 +376,6 @@
 </ul>
 <h4 id="HTTP-2介绍"><a href="#HTTP-2介绍" class="headerlink" title="HTTP/2介绍"></a>HTTP/2介绍</h4><p>在与 HTTP/1.1 完全语义兼容的基础上，进一步减少了网络延迟，大幅度的提升了 web 性能。</p>
 <h4 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h4><h5 id="1-多路复用（Multiplexing）"><a href="#1-多路复用（Multiplexing）" class="headerlink" title="1.多路复用（Multiplexing）"></a>1.多路复用（Multiplexing）</h5><p>以下描述我认为相当准确</p>
-<a id="more"></a>
 <p><strong>允许同时通过单一的 HTTP/2 连接发起多重的请求-响应消息。</strong></p>
 <p><strong>HTTP/2 中，同域名下所有通信都在单个连接上完成，该连接可以承载任意数量的双向数据流。</strong></p>
 <p>简而言之：</p>
